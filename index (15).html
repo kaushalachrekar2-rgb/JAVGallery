@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Violet Mobile UI</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #8C00FF;
+  --primary-dark: #7132CA;
+  --primary-soft: #C47BE4;
+
+  --secondary-dark: #412B6B;
+  --bg-main: #F2F2F2;
+  --white: #FFFFFF;
+  --text-muted: #666666;
+
+  --radius: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-main);
+}
+
+/* ================= FIXED HEADER ================= */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--white);
+  z-index: 1000;
+}
+
+/* Top image */
+.top-image img {
+  width: 100%;
+  display: block;
+}
+
+/* Tabs */
+.section-tabs {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background: var(--white);
+}
+
+.tab-btn {
+  flex: 1;
+  height: 52px;
+  border-radius: var(--radius);
+  border: 2px solid var(--primary-soft);
+  background: var(--white);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--secondary-dark);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  transform: scale(1.05);
+  font-size: 16px;
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(140,0,255,0.25);
+}
+
+/* ================= CONTENT ================= */
+.content-wrapper {
+  padding-top: 190px; /* height of fixed header */
+}
+
+#content {
+  padding: 0px;
+}
+
+iframe {
+  width: 100%;
+  border: none;
+  min-height: 70vh;
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIXED HEADER -->
+<div class="fixed-header">
+  <div class="top-image">
+    <img src="https://lh3.googleusercontent.com/d/1YYEUhmtqrbhNgO4XuXxWC-MgW9MYTrQ0" alt="Top Banner">
+  </div>
+
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="loadPage('discover.html', this)">Discover</button>
+    <button class="tab-btn" onclick="loadPage('featured.html', this)">Featured</button>
+    <button class="tab-btn" onclick="loadPage('collection.html', this)">Collection</button>
+  </div>
+</div>
+
+<!-- SCROLLABLE CONTENT -->
+<div class="content-wrapper">
+  <div id="content">
+    <iframe src="discover.html"></iframe>
+  </div>
+</div>
+
+<script>
+function loadPage(page, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelector('#content iframe').src = page;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Discover</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =======================
+   DESIGN TOKENS
+======================= */
+:root {
+  --primary: #8C00FF;
+  --primary-dark: #7132CA;
+  --primary-soft: #C47BE4;
+
+  --secondary-dark: #412B6B;
+
+  --bg: #F2F2F2;
+  --white: #FFFFFF;
+  --text: #1F1F1F;
+  --muted: #666666;
+
+  --radius: 14px;
+}
+
+/* =======================
+   RESET
+======================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* =======================
+   FIXED TOP CONTROLS
+======================= */
+.top-controls {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--white);
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.circle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-size: 18px;
+}
+
+.search {
+  flex: 1;
+  height: 42px;
+  border-radius: 999px;
+  border: none;
+  padding: 0 16px;
+  background: #EFEAF9;
+  font-size: 14px;
+}
+
+/* =======================
+   STYLE SELECTOR
+======================= */
+.style-selector {
+  position: sticky;
+  top: 64px;
+  z-index: 9;
+  background: var(--white);
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border-bottom: 1px solid #eee;
+}
+
+.style-btn {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--primary-soft);
+  background: #fff;
+}
+
+.style-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* =======================
+   GRID
+======================= */
+.grid {
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+/* =======================
+   CARD BASE
+======================= */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(92,62,148,0.12);
+}
+
+.title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* =======================
+   STYLE 1
+======================= */
+.style-1 .card img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+}
+
+.style-1 .info {
+  padding: 10px;
+}
+
+/* =======================
+   STYLE 2
+======================= */
+.style-2 {
+  grid-template-columns: repeat(2,1fr);
+}
+
+.style-2 img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+}
+
+.style-2 .info {
+  padding: 8px;
+}
+
+/* =======================
+   STYLE 3
+======================= */
+.style-3 {
+  grid-template-columns: repeat(3,1fr);
+}
+
+.style-3 img {
+  width: 100%;
+  aspect-ratio: 2/3;
+}
+
+/* =======================
+   STYLE 4
+======================= */
+.style-4 {
+  grid-template-columns: repeat(2,1fr);
+}
+
+.style-4 img {
+  width: 100%;
+  aspect-ratio: 3/2;
+}
+
+/* =======================
+   STYLE 6
+======================= */
+.style-6 .card {
+  display: flex;
+}
+
+.style-6 img {
+  width: 40%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+}
+
+.style-6 .info {
+  padding: 10px;
+}
+
+/* =======================
+   STYLE 7
+======================= */
+.style-7 .card {
+  display: flex;
+}
+
+.style-7 img {
+  width: 35%;
+  aspect-ratio: 2/3;
+}
+
+.style-7 .info {
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP CONTROLS -->
+<div class="top-controls">
+  <button class="circle-btn" onclick="openShorts()">▶</button>
+  <input class="search" placeholder="Search…" oninput="searchVideos(this.value)">
+  <button class="circle-btn" onclick="shuffleVideos()">🎲</button>
+</div>
+
+<!-- STYLE SELECTOR -->
+<div class="style-selector">
+  <button class="style-btn active" onclick="setStyle(1)">1</button>
+  <button class="style-btn" onclick="setStyle(2)">2</button>
+  <button class="style-btn" onclick="setStyle(3)">3</button>
+  <button class="style-btn" onclick="setStyle(4)">4</button>
+  <button class="style-btn" onclick="setStyle(5)">5</button>
+  <button class="style-btn" onclick="setStyle(6)">6</button>
+  <button class="style-btn" onclick="setStyle(7)">7</button>
+  <button class="style-btn" disabled>8</button>
+  <button class="style-btn" disabled>9</button>
+  <button class="style-btn" disabled>10</button>
+</div>
+
+<!-- GRID -->
+<div id="grid" class="grid style-1"></div>
+
+<script>
+/* =======================
+   SAMPLE DATA (REMOVE LATER)
+======================= */
+const videoCollection = window.videoCollection || [
+  {
+    thumbnail: "https://via.placeholder.com/600x400",
+    poster: "https://via.placeholder.com/400x600",
+    title: "Sample Video Title Example",
+    code: "ABC-123",
+    released: "2024",
+    duration: "120 min",
+    versions: "2",
+    rating: "4.5"
+  }
+];
+
+let currentStyle = 1;
+let currentVideos = [...videoCollection];
+
+/* =======================
+   INIT
+======================= */
+shuffleVideos();
+
+/* =======================
+   RENDER
+======================= */
+function render() {
+  const grid = document.getElementById("grid");
+  grid.className = `grid style-${currentStyle}`;
+  grid.innerHTML = "";
+
+  currentVideos.forEach(v => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img loading="lazy" src="${currentStyle <= 4 ? v.thumbnail : v.poster}">
+      <div class="info">
+        <div class="title">${v.title}</div>
+        <div class="meta">
+          🔢 ${v.code} ⏱ ${v.duration} ⭐ ${v.rating}
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* =======================
+   CONTROLS
+======================= */
+function setStyle(n) {
+  currentStyle = n;
+  document.querySelectorAll(".style-btn").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+  render();
+}
+
+function shuffleVideos() {
+  currentVideos.sort(() => Math.random() - 0.5);
+  render();
+}
+
+function searchVideos(q) {
+  q = q.toLowerCase();
+  currentVideos = videoCollection.filter(v =>
+    Object.values(v).join(" ").toLowerCase().includes(q)
+  );
+  render();
+}
+
+function openShorts() {
+  window.open("https://javtrailers.com/shorts", "_blank");
+}
+</script>
+
+</body>
+</html>
