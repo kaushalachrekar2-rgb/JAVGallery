@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Collection</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =========================
+   DESIGN TOKENS (SAME AS INDEX)
+========================= */
+:root {
+  --primary: #8C00FF;
+  --primary-dark: #7132CA;
+  --primary-soft: #C47BE4;
+
+  --secondary-dark: #412B6B;
+
+  --bg-main: #F2F2F2;
+  --white: #FFFFFF;
+  --text-dark: #1F1F1F;
+  --text-muted: #666666;
+
+  --radius: 14px;
+}
+
+/* =========================
+   RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-dark);
+}
+
+/* =========================
+   PAGE CONTAINER
+========================= */
+.page {
+  padding: 16px;
+}
+
+/* =========================
+   GRID
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* =========================
+   GRID ITEM
+========================= */
+.item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.circle {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #B153D7, #7132CA, #412B6B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(92,62,148,0.25);
+  transition: transform 0.25s ease;
+}
+
+.circle img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+}
+
+.item:hover .circle {
+  transform: scale(1.05);
+}
+
+.label {
+  margin-top: 8px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--secondary-dark);
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-box {
+  background: var(--white);
+  width: 92%;
+  max-width: 420px;
+  border-radius: var(--radius);
+  padding: 18px;
+  animation: pop 0.25s ease;
+}
+
+.modal-header {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.modal-body {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.close-btn {
+  margin-top: 14px;
+  width: 100%;
+  height: 44px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   DESKTOP LIMIT (MOBILE FIRST)
+========================= */
+@media (min-width: 768px) {
+  body {
+    max-width: 480px;
+    margin: auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="grid">
+
+    <!-- 12 ITEMS -->
+    <div class="item" onclick="openModal('Actress')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+      </div>
+      <div class="label">Actress</div>
+    </div>
+
+    <div class="item" onclick="openModal('Studio')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">
+      </div>
+      <div class="label">Studio</div>
+    </div>
+
+    <div class="item" onclick="openModal('Series')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/3388/3388780.png">
+      </div>
+      <div class="label">Series</div>
+    </div>
+
+    <div class="item" onclick="openModal('Tags')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
+      </div>
+      <div class="label">Tags</div>
+    </div>
+
+    <div class="item" onclick="openModal('Rating')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png">
+      </div>
+      <div class="label">Rating</div>
+    </div>
+
+    <div class="item" onclick="openModal('Duration')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png">
+      </div>
+      <div class="label">Duration</div>
+    </div>
+
+    <div class="item" onclick="openModal('Label')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/3523/3523063.png">
+      </div>
+      <div class="label">Label</div>
+    </div>
+
+    <div class="item" onclick="openModal('Release Year')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png">
+      </div>
+      <div class="label">Release</div>
+    </div>
+
+    <div class="item" onclick="openModal('Code')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+      </div>
+      <div class="label">Code</div>
+    </div>
+
+    <div class="item" onclick="openModal('Version')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png">
+      </div>
+      <div class="label">Version</div>
+    </div>
+
+    <div class="item" onclick="openModal('Studio Type')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+      </div>
+      <div class="label">Studio Type</div>
+    </div>
+
+    <div class="item" onclick="openModal('More')">
+      <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828859.png">
+      </div>
+      <div class="label">More</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div id="modalTitle" class="modal-header">Filter</div>
+    <div class="modal-body">
+      Filter options will be added here in the next step.
+    </div>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+function openModal(name) {
+  document.getElementById('modalTitle').innerText = name;
+  document.getElementById('modal').classList.add('active');
+}
+
+function closeModal(e) {
+  if (!e || e.target.id === 'modal') {
+    document.getElementById('modal').classList.remove('active');
+  }
+}
+</script>
+
+</body>
+</html>
