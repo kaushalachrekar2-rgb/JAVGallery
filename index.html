@@ -1,501 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Discover</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Violet Mobile UI</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 
-<!-- Font Awesome (modal uses it) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
 <style>
-/* ======================================================
-   GLOBAL TOKENS (unchanged)
-====================================================== */
-:root{
-  --primary:#8C00FF;
-  --primary-dark:#7132CA;
-  --primary-soft:#C47BE4;
-  --secondary-dark:#412B6B;
-  --bg:#F2F2F2;
-  --white:#FFFFFF;
-  --text:#1F1F1F;
-  --muted:#666666;
-  --radius:14px;
+:root {
+  --primary: #8C00FF;
+  --primary-dark: #7132CA;
+  --primary-soft: #C47BE4;
+
+  --secondary-dark: #412B6B;
+  --bg-main: #F2F2F2;
+  --white: #FFFFFF;
+  --text-muted: #666666;
+
+  --radius: 14px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* ======================================================
-   TOP CONTROLS (unchanged)
-====================================================== */
-.top-controls{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:#fff;
-  padding:10px;
-  display:flex;
-  gap:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-.circle-btn{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:var(--primary);
-  color:#fff;
-  border:none;
-  font-size:18px;
-}
-.search{
-  flex:1;
-  height:42px;
-  border-radius:999px;
-  border:none;
-  padding:0 16px;
-  background:#EFEAF9;
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-main);
 }
 
-/* ======================================================
-   STYLE SELECTOR (unchanged)
-====================================================== */
-.style-selector{
-  position:sticky;
-  top:64px;
-  z-index:9;
-  background:#fff;
-  padding:8px;
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-}
-.style-btn{
-  min-width:36px;
-  height:36px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  background:#fff;
-}
-.style-btn.active{background:var(--primary);color:#fff}
-.style-btn[disabled]{opacity:.4}
-
-/* ======================================================
-   GRID & CARDS (FULL, unchanged)
-====================================================== */
-.grid{
-  padding:12px;
-  display:grid;
-  gap:12px;
-}
-.card{
-  background:#fff;
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:0 6px 16px rgba(0,0,0,.12);
-  cursor:pointer;
-}
-.card img{width:100%;object-fit:cover}
-
-.title{
-  font-family:'Rubik';
-  font-weight:700;
-  font-size:14px;
-  line-height:1.3;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.meta{
-  font-size:12px;
-  color:var(--muted);
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.row{display:flex;justify-content:space-between}
-
-/* ===================== STYLES 1–8 ===================== */
-.style-1{grid-template-columns:1fr}
-.style-1 img{aspect-ratio:3/2}
-
-.style-2{grid-template-columns:repeat(2,1fr)}
-.style-2 img{aspect-ratio:2/3}
-
-.style-3{grid-template-columns:repeat(3,1fr)}
-.style-3 img{aspect-ratio:2/3}
-
-.style-4{grid-template-columns:repeat(2,1fr)}
-.style-4 img{aspect-ratio:3/2}
-
-.style-5{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-}
-.style-5::-webkit-scrollbar{display:none}
-.style-5 .card{min-width:80%;scroll-snap-align:start}
-.style-5 img{aspect-ratio:2/3}
-
-.style-6 .card{display:flex}
-.style-6 img{width:40%;aspect-ratio:3/2}
-.style-6 .info{padding:10px;display:flex;flex-direction:column;gap:6px}
-
-.style-7 .card{display:flex}
-.style-7 img{width:35%;aspect-ratio:2/3}
-.style-7 .info{padding:10px;display:flex;flex-direction:column;gap:6px}
-
-.style-8 .media{display:flex;gap:8px}
-.style-8 .poster{width:40%;aspect-ratio:2/3}
-.style-8 .preview{
-  width:60%;
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-}
-.style-8 .preview::-webkit-scrollbar{display:none}
-.style-8 .preview img{
-  min-width:100%;
-  aspect-ratio:5/3;
-  scroll-snap-align:start;
-}
-.style-8 .info{padding:10px}
-
-/* ======================================================
-   MODAL OVERLAY (FULL modal.html STYLES PRESERVED)
-====================================================== */
-.video-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:999;
-  display:none;
-  overflow-y:auto;
-}
-.video-modal.active{display:block}
-
-.modal-container{
-  max-width:520px;
-  margin:16px auto;
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
+/* ================= FIXED HEADER ================= */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--white);
+  z-index: 1000;
 }
 
-/* --- modal.html styles (unchanged) --- */
-.thumbnail{aspect-ratio:3/2;overflow:hidden}
-.thumbnail img{width:100%;height:100%;object-fit:cover}
-
-.content{padding:16px}
-
-h1{
-  font-family:'Rubik';
-  font-size:20px;
-  font-weight:700;
-  margin-bottom:8px;
+/* Top image */
+.top-image img {
+  width: 100%;
+  display: block;
 }
 
-.description{
-  font-size:14px;
-  line-height:1.55;
-  color:var(--muted);
-  display:-webkit-box;
-  -webkit-line-clamp:5;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.description.expanded{-webkit-line-clamp:unset}
-
-.toggle-desc{
-  margin-top:6px;
-  color:var(--primary);
-  font-weight:500;
-  cursor:pointer;
+/* Tabs */
+.section-tabs {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background: var(--white);
 }
 
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:12px;
-}
-.tag{
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid var(--primary-soft);
-  background:#fff;
-}
-
-.label-block{margin-top:14px}
-.label-title{font-weight:600;color:var(--muted)}
-.label-value{font-weight:500;color:var(--primary-dark)}
-
-.actress-row{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-}
-.actress{max-width:25%;text-align:center}
-.actress img{
-  width:100%;
-  aspect-ratio:2/3;
-  border-radius:12px;
-}
-.actress span{display:block;font-size:13px;margin-top:4px}
-
-.details{display:flex;gap:12px;margin-top:16px}
-
-.meta-col{
-  width:60%;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.meta-row{
-  display:flex;
-  gap:6px;
-  align-items:center;
+.tab-btn {
+  flex: 1;
+  height: 52px;
+  border-radius: var(--radius);
+  border: 2px solid var(--primary-soft);
+  background: var(--white);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--secondary-dark);
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
-.poster-col{width:40%}
-.poster-col img{
-  width:100%;
-  aspect-ratio:2/3;
-  border-radius:14px;
-}
-.code{
-  margin-top:8px;
-  font-family:'Rubik';
-  font-weight:700;
-  font-size:20px;
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  transform: scale(1.05);
+  font-size: 16px;
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(140,0,255,0.25);
 }
 
-.action-row{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-top:16px;
-}
-.action-btn{
-  height:44px;
-  border-radius:12px;
-  border:none;
-  background:#fff;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+/* ================= CONTENT ================= */
+.content-wrapper {
+  padding-top: 180px;
 }
 
-.modal-close{
-  position:sticky;
-  top:0;
-  background:#fff;
-  padding:10px;
-  text-align:right;
-}
-.modal-close button{
-  border:none;
-  background:none;
-  font-size:20px;
+.iframe-page {
+  width: 100%;
+  min-height: 100vh;
+  border: none;
+  background: #fff;
+  display: none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= DISCOVER ================= -->
-<div class="top-controls">
-  <button class="circle-btn">▶</button>
-  <input class="search" placeholder="Search…" oninput="searchVideos(this.value)">
-  <button class="circle-btn" onclick="shuffleVideos()">🎲</button>
-</div>
+<!-- FIXED HEADER -->
+<div class="fixed-header">
+  <div class="top-image">
+    <img src="https://lh3.googleusercontent.com/d/1YYEUhmtqrbhNgO4XuXxWC-MgW9MYTrQ0" alt="Top Banner">
+  </div>
 
-<div class="style-selector">
-  <button class="style-btn active" onclick="setStyle(1)">1</button>
-  <button class="style-btn" onclick="setStyle(2)">2</button>
-  <button class="style-btn" onclick="setStyle(3)">3</button>
-  <button class="style-btn" onclick="setStyle(4)">4</button>
-  <button class="style-btn" onclick="setStyle(5)">5</button>
-  <button class="style-btn" onclick="setStyle(6)">6</button>
-  <button class="style-btn" onclick="setStyle(7)">7</button>
-  <button class="style-btn" onclick="setStyle(8)">8</button>
-  <button class="style-btn" disabled>9</button>
-  <button class="style-btn" disabled>10</button>
-</div>
-
-<div id="grid" class="grid style-1"></div>
-
-<!-- ================= MODAL ================= -->
-<div id="videoModal" class="video-modal">
-  <div class="modal-container">
-    <div class="modal-close">
-      <button onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="thumbnail"><img id="m_thumb"></div>
-
-    <div class="content">
-      <h1 id="m_title"></h1>
-      <div id="m_desc" class="description"></div>
-      <div id="toggleDesc" class="toggle-desc">Show More</div>
-
-      <div id="m_tags" class="tags"></div>
-
-      <div class="label-block">
-        <div class="label-title">Series</div>
-        <div id="m_series" class="label-value"></div>
-      </div>
-
-      <div class="label-block">
-        <div class="label-title">Actress</div>
-        <div id="m_actresses" class="actress-row"></div>
-      </div>
-
-      <div class="details">
-        <div class="meta-col">
-          <div class="meta-row"><i class="fa-solid fa-star"></i><span id="m_rating"></span></div>
-          <div class="meta-row"><i class="fa-solid fa-building"></i><span id="m_studio"></span></div>
-          <div class="meta-row"><i class="fa-solid fa-tag"></i><span id="m_label"></span></div>
-          <div class="meta-row"><i class="fa-solid fa-calendar"></i><span id="m_release"></span></div>
-          <div class="meta-row"><i class="fa-solid fa-clock"></i><span id="m_duration"></span> min</div>
-          <div class="meta-row"><i class="fa-solid fa-layer-group"></i><span id="m_versions"></span></div>
-        </div>
-        <div class="poster-col">
-          <img id="m_poster">
-          <div id="m_code" class="code"></div>
-        </div>
-      </div>
-
-      <div class="action-row">
-        <button class="action-btn" id="btnTrailer">📽️</button>
-        <button class="action-btn" id="btnOriginal">🎞️</button>
-        <button class="action-btn" id="btnUnblurred">👁️</button>
-        <button class="action-btn" id="btnSubtitled">🅲🅲</button>
-      </div>
-    </div>
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="switchTab('discover', this)">Discover</button>
+    <button class="tab-btn" onclick="switchTab('featured', this)">Featured</button>
+    <button class="tab-btn" onclick="switchTab('collection', this)">Collection</button>
   </div>
 </div>
 
-<script src="videocollection.js"></script>
-<script src="actress.js"></script>
+<!-- CONTENT -->
+<div class="content-wrapper">
+
+  <iframe id="discover" class="iframe-page" src="./discover.html"></iframe>
+  <iframe id="featured" class="iframe-page" src="./featured.html"></iframe>
+  <iframe id="collection" class="iframe-page" src="./collection.html"></iframe>
+
+</div>
 
 <script>
-/* ================= DISCOVER LOGIC ================= */
-let currentStyle=1;
-let currentVideos=[...videoCollection];
+let currentPage = 'discover';
+const scrollMemory = {};
 
-render();
+/* Show default page */
+document.getElementById('discover').style.display = 'block';
 
-function versionsText(v){
-  return Array.isArray(v.versions)?v.versions.join(" "):"";
-}
+function switchTab(pageId, btn) {
 
-function render(){
-  const grid=document.getElementById("grid");
-  grid.className=`grid style-${currentStyle}`;
-  grid.innerHTML="";
+  const currentIframe = document.getElementById(currentPage);
 
-  currentVideos.forEach(v=>{
-    const c=document.createElement("div");
-    c.className="card";
-    c.onclick=()=>openModal(v);
+  /* Save scroll position */
+  try {
+    scrollMemory[currentPage] =
+      currentIframe.contentWindow.scrollY || 0;
+  } catch (e) {}
 
-    if(currentStyle===8){
-      c.innerHTML=`
-        <div class="media">
-          <img class="poster" src="${v.poster}">
-          <div class="preview">
-            <img src="${v.thumbnail}">
-            <img src="${v.thumbnail}">
-          </div>
-        </div>
-        <div class="info">
-          <div class="title">${v.title}</div>
-          <div class="meta">🆔 ${v.code} 📅 ${v.release} 🕒 ${v.duration}m ⭐ ${v.rating} ${versionsText(v)}</div>
-        </div>`;
-    }else{
-      c.innerHTML=`
-        <img src="${currentStyle<=4||currentStyle===6?v.thumbnail:v.poster}">
-        <div class="info">
-          <div class="title">${v.title||""}</div>
-          <div class="meta">🆔 ${v.code} 🕒 ${v.duration}m ⭐ ${v.rating}</div>
-        </div>`;
-    }
-    grid.appendChild(c);
-  });
-}
-
-function setStyle(n){
-  currentStyle=n;
-  document.querySelectorAll(".style-btn").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
-  render();
-}
-function shuffleVideos(){currentVideos.sort(()=>Math.random()-.5);render()}
-function searchVideos(q){
-  q=q.toLowerCase();
-  currentVideos=videoCollection.filter(v=>Object.values(v).join(" ").toLowerCase().includes(q));
-  render();
-}
-
-/* ================= MODAL LOGIC ================= */
-function openModal(video){
-  videoModal.classList.add("active");
-  document.body.style.overflow="hidden";
-
-  m_thumb.src=video.thumbnail;
-  m_poster.src=video.poster;
-  m_title.textContent=video.title;
-  m_desc.textContent=video.description||"";
-  m_code.textContent=video.code;
-  m_rating.textContent=video.rating?.toFixed(2)||"-";
-  m_studio.textContent=video.studio||"-";
-  m_label.textContent=video.label||"-";
-  m_release.textContent=video.release||"-";
-  m_duration.textContent=video.duration||"-";
-  m_versions.textContent=versionsText(video);
-
-  m_tags.innerHTML="";
-  video.tags?.forEach(t=>{
-    const el=document.createElement("div");
-    el.className="tag";
-    el.textContent=t;
-    m_tags.appendChild(el);
+  /* Hide all iframes */
+  document.querySelectorAll('.iframe-page').forEach(f => {
+    f.style.display = 'none';
   });
 
-  m_actresses.innerHTML="";
-  video.actresses?.forEach(n=>{
-    const a=actressMap[n];
-    if(!a)return;
-    const el=document.createElement("div");
-    el.className="actress";
-    el.innerHTML=`<img src="${a.image}"><span>${n}</span>`;
-    m_actresses.appendChild(el);
-  });
+  /* Show selected iframe */
+  const targetIframe = document.getElementById(pageId);
+  targetIframe.style.display = 'block';
 
-  toggleDesc.onclick=()=>{
-    m_desc.classList.toggle("expanded");
-    toggleDesc.textContent=m_desc.classList.contains("expanded")?"Show Less":"Show More";
+  /* Restore scroll position */
+  targetIframe.onload = () => {
+    const y = scrollMemory[pageId] || 0;
+    targetIframe.contentWindow.scrollTo(0, y);
   };
 
-  btnTrailer.onclick=()=>window.open(video.trailer,"_blank");
-  btnOriginal.onclick=()=>window.open(video.original,"_blank");
-  btnUnblurred.onclick=()=>window.open(video.unblurred,"_blank");
-  btnSubtitled.onclick=()=>window.open(video.subtitled,"_blank");
-}
+  /* Restore instantly if already loaded */
+  if (targetIframe.contentDocument.readyState === 'complete') {
+    const y = scrollMemory[pageId] || 0;
+    targetIframe.contentWindow.scrollTo(0, y);
+  }
 
-function closeModal(){
-  videoModal.classList.remove("active");
-  document.body.style.overflow="";
+  /* Update active tab */
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  currentPage = pageId;
 }
 </script>
 
