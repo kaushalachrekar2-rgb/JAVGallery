@@ -86,13 +86,14 @@ body {
 }
 
 #content {
-  padding: 0px;
+  padding: 0;
 }
 
 iframe {
   width: 100%;
   border: none;
-  min-height: 70vh;
+  min-height: 100vh;
+  background: #fff;
 }
 </style>
 </head>
@@ -115,19 +116,21 @@ iframe {
 <!-- SCROLLABLE CONTENT -->
 <div class="content-wrapper">
   <div id="content">
-    <iframe src="discover.html"></iframe>
+    <!-- DEFAULT PAGE -->
+    <iframe src="./discover.html"></iframe>
   </div>
 </div>
 
 <script>
 function loadPage(page, btn) {
+  // Update active tab
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  document.querySelector('#content iframe').src = page;
+  // Load page safely for GitHub Pages
+  document.querySelector('#content iframe').src = './' + page;
 }
 </script>
 
 </body>
 </html>
-
