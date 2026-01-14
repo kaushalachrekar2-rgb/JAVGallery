@@ -82,18 +82,15 @@ body {
 
 /* ================= CONTENT ================= */
 .content-wrapper {
-  padding-top: 180px; /* height of fixed header */
+  padding-top: 180px;
 }
 
-#content {
-  padding: 0;
-}
-
-iframe {
+.iframe-page {
   width: 100%;
-  border: none;
   min-height: 100vh;
+  border: none;
   background: #fff;
+  display: none;
 }
 </style>
 </head>
@@ -107,28 +104,64 @@ iframe {
   </div>
 
   <div class="section-tabs">
-    <button class="tab-btn active" onclick="loadPage('discover.html', this)">Discover</button>
-    <button class="tab-btn" onclick="loadPage('featured.html', this)">Featured</button>
-    <button class="tab-btn" onclick="loadPage('collection.html', this)">Collection</button>
+    <button class="tab-btn active" onclick="switchTab('discover', this)">Discover</button>
+    <button class="tab-btn" onclick="switchTab('featured', this)">Featured</button>
+    <button class="tab-btn" onclick="switchTab('collection', this)">Collection</button>
   </div>
 </div>
 
-<!-- SCROLLABLE CONTENT -->
+<!-- CONTENT -->
 <div class="content-wrapper">
-  <div id="content">
-    <!-- DEFAULT PAGE -->
-    <iframe src="./discover.html"></iframe>
-  </div>
+
+  <iframe id="discover" class="iframe-page" src="./discover.html"></iframe>
+  <iframe id="featured" class="iframe-page" src="./featured.html"></iframe>
+  <iframe id="collection" class="iframe-page" src="./collection.html"></iframe>
+
 </div>
 
 <script>
-function loadPage(page, btn) {
-  // Update active tab
+let currentPage = 'discover';
+const scrollMemory = {};
+
+/* Show default page */
+document.getElementById('discover').style.display = 'block';
+
+function switchTab(pageId, btn) {
+
+  const currentIframe = document.getElementById(currentPage);
+
+  /* Save scroll position */
+  try {
+    scrollMemory[currentPage] =
+      currentIframe.contentWindow.scrollY || 0;
+  } catch (e) {}
+
+  /* Hide all iframes */
+  document.querySelectorAll('.iframe-page').forEach(f => {
+    f.style.display = 'none';
+  });
+
+  /* Show selected iframe */
+  const targetIframe = document.getElementById(pageId);
+  targetIframe.style.display = 'block';
+
+  /* Restore scroll position */
+  targetIframe.onload = () => {
+    const y = scrollMemory[pageId] || 0;
+    targetIframe.contentWindow.scrollTo(0, y);
+  };
+
+  /* Restore instantly if already loaded */
+  if (targetIframe.contentDocument.readyState === 'complete') {
+    const y = scrollMemory[pageId] || 0;
+    targetIframe.contentWindow.scrollTo(0, y);
+  }
+
+  /* Update active tab */
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  // Load page safely for GitHub Pages
-  document.querySelector('#content iframe').src = './' + page;
+  currentPage = pageId;
 }
 </script>
 
