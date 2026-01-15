@@ -5,7 +5,11 @@
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
-/>
+>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
 <title>Violet Mobile UI</title>
 
 <!-- Google Fonts -->
@@ -15,7 +19,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-/* ================= ROOT ================= */
 :root{
   --primary:#8C00FF;
   --primary-dark:#7132CA;
@@ -38,12 +41,12 @@ html,body{
   width:100%;
   max-width:100%;
   overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
 }
 
 body{
   font-family:'DM Sans',sans-serif;
   background:var(--bg-main);
-  -webkit-text-size-adjust:100%;
 }
 
 /* ================= FIXED HEADER ================= */
@@ -51,14 +54,13 @@ body{
   position:fixed;
   top:0;
   left:0;
-  width:100%;
+  width:100vw;
   background:var(--white);
   z-index:1000;
 }
 
 .top-image img{
   width:100%;
-  height:auto;
   display:block;
 }
 
@@ -94,15 +96,17 @@ body{
 /* ================= CONTENT ================= */
 .content-wrapper{
   padding-top:155px;
-  width:100%;
+  width:100vw;
 }
 
 .iframe-page{
-  width:100%;
+  width:100vw;
+  min-width:100vw;
   min-height:100vh;
   border:none;
   background:#fff;
   display:none;
+  transform:translateZ(0);
 }
 
 /* ================= GLOBAL MODAL ================= */
@@ -259,9 +263,7 @@ h1{
     <button class="modal-close" onclick="closeVideoModal()">✕</button>
     <div class="modal-sheet">
       <div class="container">
-
         <div class="thumbnail"><img id="thumb"></div>
-
         <div class="content">
           <h1 id="title"></h1>
           <div id="desc" class="description"></div>
