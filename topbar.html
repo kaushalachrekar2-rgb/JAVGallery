@@ -5,126 +5,240 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Violet Mobile UI</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-:root {
-  --primary: #8C00FF;
-  --primary-dark: #7132CA;
-  --primary-soft: #C47BE4;
+:root{
+  --primary:#8C00FF;
+  --primary-dark:#7132CA;
+  --primary-soft:#C47BE4;
+  --secondary-dark:#412B6B;
+  --bg-main:#F2F2F2;
+  --white:#FFFFFF;
+  --text-muted:#666666;
+  --text-dark:#1F1F1F;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-main)}
 
-  --secondary-dark: #412B6B;
-  --bg-main: #F2F2F2;
-  --white: #FFFFFF;
-  --text-muted: #666666;
+.fixed-header{position:fixed;top:0;left:0;width:100%;background:var(--white);z-index:1000}
+.top-image img{width:100%;display:block}
 
-  --radius: 14px;
+.section-tabs{display:flex;gap:10px;padding:10px;background:var(--white)}
+.tab-btn{
+  flex:1;height:40px;border-radius:var(--radius);
+  border:2px solid var(--primary-soft);
+  background:var(--white);
+  font-family:'Rubik',sans-serif;font-size:14px;
+  color:var(--secondary-dark);cursor:pointer;transition:.25s
+}
+.tab-btn.active{
+  background:var(--primary);color:#fff;
+  transform:scale(1.05);font-size:16px;
+  border-color:var(--primary);
+  box-shadow:0 8px 15px rgba(140,0,255,.25)
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.content-wrapper{padding-top:155px}
+.iframe-page{width:100%;min-height:100vh;border:none;background:#fff;display:none}
+
+/* MODAL */
+#videoModal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:none}
+#videoModal.active{display:flex;justify-content:center;align-items:center}
+
+.modal-shell{
+  position:relative;width:100%;max-width:560px;
+  height:calc(100vh - 40px);margin:20px;
+  background:var(--bg-main);border-radius:18px;
+  overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25)
+}
+.modal-sheet{height:100%;overflow-y:auto;padding:14px}
+.modal-close{
+  position:absolute;top:10px;right:10px;
+  width:42px;height:42px;border-radius:50%;
+  border:none;background:var(--white);
+  font-size:20px;cursor:pointer;z-index:10;
+  box-shadow:0 6px 16px rgba(0,0,0,.25)
 }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg-main);
+/* ORIGINAL STYLES */
+.container{max-width:520px;margin:auto}
+.thumbnail{width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:16px}
+.thumbnail img{width:100%;height:100%;object-fit:cover}
+.content{padding:16px}
+h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px}
+.description{
+  font-size:14px;line-height:1.55;color:var(--text-muted);
+  text-align:justify;display:-webkit-box;
+  -webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden
+}
+.description.expanded{-webkit-line-clamp:unset}
+.toggle-desc{margin-top:6px;color:var(--primary);font-weight:500;font-size:14px;cursor:pointer}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{
+  padding:6px 12px;border-radius:999px;
+  background:var(--white);border:1px solid var(--primary-soft);
+  font-size:13px;cursor:pointer
 }
 
-/* ================= FIXED HEADER ================= */
-.fixed-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: var(--white);
-  z-index: 1000;
-}
+.label-block{margin-top:14px;font-size:15px}
+.label-title{font-weight:600;color:var(--text-muted);margin-bottom:4px}
+.label-value{font-weight:500;color:var(--primary-dark);cursor:pointer}
 
-/* Top image */
-.top-image img {
-  width: 100%;
-  display: block;
-}
+.actress-row{display:flex;gap:10px;overflow-x:auto}
+.actress{max-width:25%;text-align:center;cursor:pointer}
+.actress img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:12px}
+.actress span{display:block;font-size:13px;margin-top:4px}
 
-/* Tabs */
-.section-tabs {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  background: var(--white);
-}
+.details{display:flex;gap:12px;margin-top:16px}
+.meta{width:60%;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.meta-row{display:flex;gap:6px;align-items:center}
+.meta-row i{width:18px;color:var(--primary)}
 
-.tab-btn {
-  flex: 1;
-  height: 52px;
-  border-radius: var(--radius);
-  border: 2px solid var(--primary-soft);
-  background: var(--white);
-  font-family: 'Rubik', sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  color: var(--secondary-dark);
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
+.poster{width:40%;text-align:center}
+.poster img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:14px}
+.code{margin-top:8px;font-family:'Rubik',sans-serif;font-weight:700;font-size:20px}
 
-.tab-btn.active {
-  background: var(--primary);
-  color: #fff;
-  transform: scale(1.05);
-  font-size: 16px;
-  border-color: var(--primary);
-  box-shadow: 0 8px 20px rgba(140,0,255,0.25);
+.action-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:10px;margin-top:16px
 }
-
-/* ================= CONTENT ================= */
-.content-wrapper {
-  padding-top: 180px; /* height of fixed header */
-}
-
-#content {
-  padding: 0px;
-}
-
-iframe {
-  width: 100%;
-  border: none;
-  min-height: 70vh;
+.action-btn{
+  height:44px;border-radius:12px;border:none;
+  background:var(--white);
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  font-size:18px;cursor:pointer
 }
 </style>
 </head>
 
 <body>
 
-<!-- FIXED HEADER -->
 <div class="fixed-header">
   <div class="top-image">
-    <img src="https://lh3.googleusercontent.com/d/1YYEUhmtqrbhNgO4XuXxWC-MgW9MYTrQ0" alt="Top Banner">
+    <img src="https://lh3.googleusercontent.com/d/1YYEUhmtqrbhNgO4XuXxWC-MgW9MYTrQ0">
   </div>
-
   <div class="section-tabs">
-    <button class="tab-btn active" onclick="loadPage('discover.html', this)">Discover</button>
-    <button class="tab-btn" onclick="loadPage('featured.html', this)">Featured</button>
-    <button class="tab-btn" onclick="loadPage('collection.html', this)">Collection</button>
+    <button class="tab-btn active" onclick="switchTab('discover',this)">Discover</button>
+    <button class="tab-btn" onclick="switchTab('featured',this)">Featured</button>
+    <button class="tab-btn" onclick="switchTab('collection',this)">Collection</button>
   </div>
 </div>
 
-<!-- SCROLLABLE CONTENT -->
 <div class="content-wrapper">
-  <div id="content">
-    <iframe src="discover.html"></iframe>
+  <iframe id="discover" class="iframe-page" src="./discover.html"></iframe>
+  <iframe id="featured" class="iframe-page" src="./featured.html"></iframe>
+  <iframe id="collection" class="iframe-page" src="./collection.html"></iframe>
+</div>
+
+<div id="videoModal">
+  <div class="modal-shell">
+    <button class="modal-close" onclick="closeVideoModal()">✕</button>
+    <div class="modal-sheet">
+      <div class="container">
+        <div class="thumbnail"><img id="thumb"></div>
+        <div class="content">
+          <h1 id="title"></h1>
+          <div id="desc" class="description"></div>
+          <div id="toggleDesc" class="toggle-desc">Show More</div>
+          <div id="tags" class="tags"></div>
+
+          <div class="label-block">
+            <div class="label-title">Series</div>
+            <div id="series" class="label-value"></div>
+          </div>
+
+          <div class="label-block">
+            <div class="label-title">Actress</div>
+            <div id="actresses" class="actress-row"></div>
+          </div>
+
+          <div class="details">
+            <div class="meta">
+              <div class="meta-row"><i class="fa-solid fa-star"></i><span id="rating"></span></div>
+              <div class="meta-row"><i class="fa-solid fa-building"></i><span id="studio"></span></div>
+              <div class="meta-row"><i class="fa-solid fa-tag"></i><span id="label"></span></div>
+              <div class="meta-row"><i class="fa-solid fa-user"></i><span id="director"></span></div>
+              <div class="meta-row"><i class="fa-solid fa-calendar"></i><span id="release"></span></div>
+              <div class="meta-row"><i class="fa-solid fa-clock"></i><span id="duration"></span></div>
+              <div class="meta-row"><i class="fa-solid fa-layer-group"></i><span id="versions"></span></div>
+            </div>
+            <div class="poster">
+              <img id="poster">
+              <div id="code" class="code"></div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="action-btn">📽️</button>
+            <button class="action-btn">🎞️</button>
+            <button class="action-btn">👁️</button>
+            <button class="action-btn">🅲🅲</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-function loadPage(page, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+let currentPage='discover';
+const scrollMemory={};
+document.getElementById('discover').style.display='block';
 
-  document.querySelector('#content iframe').src = page;
+function switchTab(id,btn){
+  const cur=document.getElementById(currentPage);
+  try{scrollMemory[currentPage]=cur.contentWindow.scrollY||0}catch(e){}
+  document.querySelectorAll('.iframe-page').forEach(f=>f.style.display='none');
+  const tgt=document.getElementById(id);
+  tgt.style.display='block';
+  tgt.onload=()=>tgt.contentWindow.scrollTo(0,scrollMemory[id]||0);
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentPage=id;
+}
+
+function openVideoModal(video){
+  document.body.style.overflow='hidden';
+  document.getElementById('videoModal').classList.add('active');
+  renderVideo(video);
+}
+function closeVideoModal(){
+  document.body.style.overflow='';
+  document.getElementById('videoModal').classList.remove('active');
+}
+
+/* FILTER HANDLER */
+function applyFilterFromModal(filterKey,filterValue){
+  localStorage.setItem('discoverFilter',JSON.stringify({key:filterKey,value:filterValue}));
+  closeVideoModal();
+  switchTab('discover',document.querySelector('.tab-btn'));
+  document.getElementById('discover').contentWindow.location.href =
+    './discover.html?filter='+encodeURIComponent(filterKey)+
+    '&value='+encodeURIComponent(filterValue);
+}
+</script>
+
+<script src="videocollection.js"></script>
+<script src="actress.js"></script>
+
+<script>
+function renderVideo(video){
+  thumb.src=video.thumbnail;
+  poster.src=video.poster;
+  title.textContent=video.title;
+  desc.textContent=video.description;
+  code.textContent=video.code;
+  rating.textContent=video.rating?.toFixed(2)||"-";
+  studio.textContent=video.studio||"-";
+  label.textContent=video.label||"-";
+  director.textContent=video.director||"-";
+  release.textContent=video.release||"-";
+  duration.textContent=video.duration||"-";
+  versions.textContent=video.versions?.join(", ")||"-";
+  series.textContent=video.series||"-";
 }
 </script>
 
