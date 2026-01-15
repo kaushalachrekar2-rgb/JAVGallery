@@ -5,11 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Violet Mobile UI</title>
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-:root{
+/* ================= ROOT ================= */
+:root {
   --primary:#8C00FF;
   --primary-dark:#7132CA;
   --primary-soft:#C47BE4;
@@ -20,67 +24,160 @@
   --text-dark:#1F1F1F;
   --radius:14px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg-main)}
 
-.fixed-header{position:fixed;top:0;left:0;width:100%;background:var(--white);z-index:1000}
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg-main);
+}
+
+/* ================= FIXED HEADER ================= */
+.fixed-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:var(--white);
+  z-index:1000;
+}
+
 .top-image img{width:100%;display:block}
 
-.section-tabs{display:flex;gap:10px;padding:10px;background:var(--white)}
+.section-tabs{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  background:var(--white);
+}
+
 .tab-btn{
-  flex:1;height:40px;border-radius:var(--radius);
+  flex:1;
+  height:40px;
+  border-radius:var(--radius);
   border:2px solid var(--primary-soft);
   background:var(--white);
-  font-family:'Rubik',sans-serif;font-size:14px;
-  color:var(--secondary-dark);cursor:pointer;transition:.25s
+  font-family:'Rubik',sans-serif;
+  font-size:14px;
+  color:var(--secondary-dark);
+  cursor:pointer;
+  transition:.25s;
 }
+
 .tab-btn.active{
-  background:var(--primary);color:#fff;
-  transform:scale(1.05);font-size:16px;
+  background:var(--primary);
+  color:#fff;
+  transform:scale(1.05);
+  font-size:16px;
   border-color:var(--primary);
-  box-shadow:0 8px 15px rgba(140,0,255,.25)
+  box-shadow:0 8px 15px rgba(140,0,255,.25);
 }
 
+/* ================= CONTENT ================= */
 .content-wrapper{padding-top:155px}
-.iframe-page{width:100%;min-height:100vh;border:none;background:#fff;display:none}
 
-/* MODAL */
-#videoModal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:none}
-#videoModal.active{display:flex;justify-content:center;align-items:center}
+.iframe-page{
+  width:100%;
+  min-height:100vh;
+  border:none;
+  background:#fff;
+  display:none;
+}
 
+/* ================= GLOBAL MODAL ================= */
+#videoModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:99999;
+  display:none;
+}
+
+#videoModal.active{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Modal shell (spacing from edges) */
 .modal-shell{
-  position:relative;width:100%;max-width:560px;
-  height:calc(100vh - 40px);margin:20px;
-  background:var(--bg-main);border-radius:18px;
-  overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25)
-}
-.modal-sheet{height:100%;overflow-y:auto;padding:14px}
-.modal-close{
-  position:absolute;top:10px;right:10px;
-  width:42px;height:42px;border-radius:50%;
-  border:none;background:var(--white);
-  font-size:20px;cursor:pointer;z-index:10;
-  box-shadow:0 6px 16px rgba(0,0,0,.25)
+  position:relative;
+  width:100%;
+  max-width:560px;
+  height:calc(100vh - 40px);
+  margin:20px;
+  background:var(--bg-main);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 
-/* ORIGINAL STYLES */
+/* Scrollable content */
+.modal-sheet{
+  height:100%;
+  overflow-y:auto;
+  padding:14px;
+}
+
+/* Fixed close button */
+.modal-close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  background:var(--white);
+  font-size:20px;
+  cursor:pointer;
+  z-index:10;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+
+/* ================= ORIGINAL MODAL STYLES (UNCHANGED) ================= */
 .container{max-width:520px;margin:auto}
+
 .thumbnail{width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:16px}
 .thumbnail img{width:100%;height:100%;object-fit:cover}
+
 .content{padding:16px}
-h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px}
+
+h1{
+  font-family:'Rubik',sans-serif;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
 .description{
-  font-size:14px;line-height:1.55;color:var(--text-muted);
-  text-align:justify;display:-webkit-box;
-  -webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden
+  font-size:14px;
+  line-height:1.55;
+  color:var(--text-muted);
+  text-align:justify;
+  display:-webkit-box;
+  -webkit-line-clamp:5;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
 }
 .description.expanded{-webkit-line-clamp:unset}
-.toggle-desc{margin-top:6px;color:var(--primary);font-weight:500;font-size:14px;cursor:pointer}
+
+.toggle-desc{
+  margin-top:6px;
+  color:var(--primary);
+  font-weight:500;
+  font-size:14px;
+  cursor:pointer;
+}
+
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .tag{
-  padding:6px 12px;border-radius:999px;
-  background:var(--white);border:1px solid var(--primary-soft);
-  font-size:13px;cursor:pointer
+  padding:6px 12px;
+  border-radius:999px;
+  background:var(--white);
+  border:1px solid var(--primary-soft);
+  font-size:13px;
+  cursor:pointer;
 }
 
 .label-block{margin-top:14px;font-size:15px}
@@ -93,6 +190,7 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
 .actress span{display:block;font-size:13px;margin-top:4px}
 
 .details{display:flex;gap:12px;margin-top:16px}
+
 .meta{width:60%;display:flex;flex-direction:column;gap:10px;font-size:15px}
 .meta-row{display:flex;gap:6px;align-items:center}
 .meta-row i{width:18px;color:var(--primary)}
@@ -102,20 +200,26 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
 .code{margin-top:8px;font-family:'Rubik',sans-serif;font-weight:700;font-size:20px}
 
 .action-row{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:10px;margin-top:16px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:16px;
 }
 .action-btn{
-  height:44px;border-radius:12px;border:none;
+  height:44px;
+  border-radius:12px;
+  border:none;
   background:var(--white);
   box-shadow:0 6px 16px rgba(0,0,0,.08);
-  font-size:18px;cursor:pointer
+  font-size:18px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="fixed-header">
   <div class="top-image">
     <img src="https://lh3.googleusercontent.com/d/1YYEUhmtqrbhNgO4XuXxWC-MgW9MYTrQ0">
@@ -127,18 +231,24 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
   </div>
 </div>
 
+<!-- CONTENT -->
 <div class="content-wrapper">
   <iframe id="discover" class="iframe-page" src="./discover.html"></iframe>
   <iframe id="featured" class="iframe-page" src="./featured.html"></iframe>
   <iframe id="collection" class="iframe-page" src="./collection.html"></iframe>
 </div>
 
+<!-- GLOBAL MODAL -->
 <div id="videoModal">
   <div class="modal-shell">
+
     <button class="modal-close" onclick="closeVideoModal()">✕</button>
+
     <div class="modal-sheet">
       <div class="container">
+
         <div class="thumbnail"><img id="thumb"></div>
+
         <div class="content">
           <h1 id="title"></h1>
           <div id="desc" class="description"></div>
@@ -172,11 +282,12 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
           </div>
 
           <div class="action-row">
-            <button class="action-btn">📽️</button>
-            <button class="action-btn">🎞️</button>
-            <button class="action-btn">👁️</button>
-            <button class="action-btn">🅲🅲</button>
+            <button class="action-btn" id="btnTrailer">📽️</button>
+            <button class="action-btn" id="btnOriginal">🎞️</button>
+            <button class="action-btn" id="btnUnblurred">👁️</button>
+            <button class="action-btn" id="btnSubtitled">🅲🅲</button>
           </div>
+
         </div>
       </div>
     </div>
@@ -184,6 +295,7 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
 </div>
 
 <script>
+/* ================= TAB SYSTEM ================= */
 let currentPage='discover';
 const scrollMemory={};
 document.getElementById('discover').style.display='block';
@@ -200,24 +312,16 @@ function switchTab(id,btn){
   currentPage=id;
 }
 
+/* ================= MODAL CONTROLS ================= */
 function openVideoModal(video){
   document.body.style.overflow='hidden';
   document.getElementById('videoModal').classList.add('active');
   renderVideo(video);
 }
+
 function closeVideoModal(){
   document.body.style.overflow='';
   document.getElementById('videoModal').classList.remove('active');
-}
-
-/* FILTER HANDLER */
-function applyFilterFromModal(filterKey,filterValue){
-  localStorage.setItem('discoverFilter',JSON.stringify({key:filterKey,value:filterValue}));
-  closeVideoModal();
-  switchTab('discover',document.querySelector('.tab-btn'));
-  document.getElementById('discover').contentWindow.location.href =
-    './discover.html?filter='+encodeURIComponent(filterKey)+
-    '&value='+encodeURIComponent(filterValue);
 }
 </script>
 
@@ -225,12 +329,14 @@ function applyFilterFromModal(filterKey,filterValue){
 <script src="actress.js"></script>
 
 <script>
+/* ================= ORIGINAL MODAL LOGIC ================= */
 function renderVideo(video){
   thumb.src=video.thumbnail;
   poster.src=video.poster;
   title.textContent=video.title;
   desc.textContent=video.description;
   code.textContent=video.code;
+
   rating.textContent=video.rating?.toFixed(2)||"-";
   studio.textContent=video.studio||"-";
   label.textContent=video.label||"-";
@@ -238,6 +344,7 @@ function renderVideo(video){
   release.textContent=video.release||"-";
   duration.textContent=video.duration||"-";
   versions.textContent=video.versions?.join(", ")||"-";
+
   series.textContent=video.series||"-";
 }
 </script>
