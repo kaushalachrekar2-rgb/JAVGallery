@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Violet Mobile UI</title>
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
@@ -23,16 +26,22 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg-main)}
 
-.fixed-header{position:fixed;top:0;left:0;width:100%;background:var(--white);z-index:1000}
+.fixed-header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  background:#fff;z-index:1000;
+}
 .top-image img{width:100%;display:block}
 
-.section-tabs{display:flex;gap:10px;padding:10px;background:var(--white)}
+.section-tabs{
+  display:flex;gap:10px;padding:10px;background:#fff
+}
 .tab-btn{
   flex:1;height:40px;border-radius:var(--radius);
   border:2px solid var(--primary-soft);
-  background:var(--white);
-  font-family:'Rubik',sans-serif;font-size:14px;
-  color:var(--secondary-dark);cursor:pointer;transition:.25s
+  background:#fff;font-family:'Rubik',sans-serif;
+  font-size:14px;color:var(--secondary-dark);
+  cursor:pointer;transition:.25s
 }
 .tab-btn.active{
   background:var(--primary);color:#fff;
@@ -42,73 +51,80 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-main)}
 }
 
 .content-wrapper{padding-top:155px}
-.iframe-page{width:100%;min-height:100vh;border:none;background:#fff;display:none}
+.iframe-page{
+  width:100%;min-height:100vh;
+  border:none;background:#fff;display:none
+}
 
-/* MODAL */
-#videoModal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:none}
-#videoModal.active{display:flex;justify-content:center;align-items:center}
-
+/* GLOBAL MODAL */
+#videoModal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:99999;display:none
+}
+#videoModal.active{
+  display:flex;justify-content:center;align-items:center
+}
 .modal-shell{
   position:relative;width:100%;max-width:560px;
-  height:calc(100vh - 40px);margin:20px;
-  background:var(--bg-main);border-radius:18px;
-  overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25)
+  height:calc(100vh - 40px);
+  margin:20px;background:var(--bg-main);
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,.25)
 }
 .modal-sheet{height:100%;overflow-y:auto;padding:14px}
 .modal-close{
   position:absolute;top:10px;right:10px;
   width:42px;height:42px;border-radius:50%;
-  border:none;background:var(--white);
-  font-size:20px;cursor:pointer;z-index:10;
+  border:none;background:#fff;font-size:20px;
+  cursor:pointer;z-index:10;
   box-shadow:0 6px 16px rgba(0,0,0,.25)
 }
 
-/* ORIGINAL STYLES */
+/* ORIGINAL MODAL STYLES */
 .container{max-width:520px;margin:auto}
 .thumbnail{width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:16px}
 .thumbnail img{width:100%;height:100%;object-fit:cover}
 .content{padding:16px}
-h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px}
+h1{
+  font-family:'Rubik',sans-serif;
+  font-size:20px;font-weight:700;margin-bottom:8px
+}
 .description{
   font-size:14px;line-height:1.55;color:var(--text-muted);
   text-align:justify;display:-webkit-box;
-  -webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden
+  -webkit-line-clamp:5;-webkit-box-orient:vertical;
+  overflow:hidden
 }
 .description.expanded{-webkit-line-clamp:unset}
 .toggle-desc{margin-top:6px;color:var(--primary);font-weight:500;font-size:14px;cursor:pointer}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .tag{
   padding:6px 12px;border-radius:999px;
-  background:var(--white);border:1px solid var(--primary-soft);
+  background:#fff;border:1px solid var(--primary-soft);
   font-size:13px;cursor:pointer
 }
-
 .label-block{margin-top:14px;font-size:15px}
 .label-title{font-weight:600;color:var(--text-muted);margin-bottom:4px}
 .label-value{font-weight:500;color:var(--primary-dark);cursor:pointer}
-
 .actress-row{display:flex;gap:10px;overflow-x:auto}
 .actress{max-width:25%;text-align:center;cursor:pointer}
 .actress img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:12px}
 .actress span{display:block;font-size:13px;margin-top:4px}
-
 .details{display:flex;gap:12px;margin-top:16px}
 .meta{width:60%;display:flex;flex-direction:column;gap:10px;font-size:15px}
 .meta-row{display:flex;gap:6px;align-items:center}
 .meta-row i{width:18px;color:var(--primary)}
-
 .poster{width:40%;text-align:center}
 .poster img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:14px}
 .code{margin-top:8px;font-family:'Rubik',sans-serif;font-weight:700;font-size:20px}
-
 .action-row{
   display:grid;grid-template-columns:repeat(4,1fr);
   gap:10px;margin-top:16px
 }
 .action-btn{
   height:44px;border-radius:12px;border:none;
-  background:var(--white);
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.08);
   font-size:18px;cursor:pointer
 }
 </style>
@@ -147,7 +163,7 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
 
           <div class="label-block">
             <div class="label-title">Series</div>
-            <div id="series" class="label-value"></div>
+            <div id="series" class="label-value filter-option" data-filter-type="series"></div>
           </div>
 
           <div class="label-block">
@@ -157,11 +173,11 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
 
           <div class="details">
             <div class="meta">
-              <div class="meta-row"><i class="fa-solid fa-star"></i><span id="rating"></span></div>
-              <div class="meta-row"><i class="fa-solid fa-building"></i><span id="studio"></span></div>
-              <div class="meta-row"><i class="fa-solid fa-tag"></i><span id="label"></span></div>
+              <div class="meta-row filter-option" data-filter-type="rating"><i class="fa-solid fa-star"></i><span id="rating"></span></div>
+              <div class="meta-row filter-option" data-filter-type="studio"><i class="fa-solid fa-building"></i><span id="studio"></span></div>
+              <div class="meta-row filter-option" data-filter-type="label"><i class="fa-solid fa-tag"></i><span id="label"></span></div>
               <div class="meta-row"><i class="fa-solid fa-user"></i><span id="director"></span></div>
-              <div class="meta-row"><i class="fa-solid fa-calendar"></i><span id="release"></span></div>
+              <div class="meta-row filter-option" data-filter-type="release"><i class="fa-solid fa-calendar"></i><span id="release"></span></div>
               <div class="meta-row"><i class="fa-solid fa-clock"></i><span id="duration"></span></div>
               <div class="meta-row"><i class="fa-solid fa-layer-group"></i><span id="versions"></span></div>
             </div>
@@ -177,6 +193,7 @@ h1{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;margin-bottom:8
             <button class="action-btn">👁️</button>
             <button class="action-btn">🅲🅲</button>
           </div>
+
         </div>
       </div>
     </div>
@@ -210,15 +227,20 @@ function closeVideoModal(){
   document.getElementById('videoModal').classList.remove('active');
 }
 
-/* FILTER HANDLER */
-function applyFilterFromModal(filterKey,filterValue){
-  localStorage.setItem('discoverFilter',JSON.stringify({key:filterKey,value:filterValue}));
+/* FILTER HANDLING */
+document.addEventListener('click',e=>{
+  const opt=e.target.closest('.filter-option');
+  if(!opt)return;
+  const type=opt.dataset.filterType;
+  const value=opt.innerText.trim();
+  if(!value||value==='-')return;
+  localStorage.setItem('discoverFilter',JSON.stringify({type,value}));
   closeVideoModal();
-  switchTab('discover',document.querySelector('.tab-btn'));
-  document.getElementById('discover').contentWindow.location.href =
-    './discover.html?filter='+encodeURIComponent(filterKey)+
-    '&value='+encodeURIComponent(filterValue);
-}
+  const discoverBtn=document.querySelector('.tab-btn');
+  switchTab('discover',discoverBtn);
+  document.getElementById('discover').src='./discover.html';
+});
+
 </script>
 
 <script src="videocollection.js"></script>
