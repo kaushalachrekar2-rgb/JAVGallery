@@ -3,56 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Violet Mobile UI</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Page-specific styles will be loaded dynamically -->
+    <title>Jav Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header will be loaded here -->
-    <div id="header-container"></div>
-    
-    <!-- Main Content -->
-    <div class="content-wrapper">
-        <!-- Pages will be loaded dynamically -->
-        <div id="page-container"></div>
+    <!-- Header -->
+    <header>
+        <div class="logo">Jav Gallery</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Search & Action Bar -->
+    <div class="action-bar">
+        <button class="filters-btn" id="filtersBtn">
+            <i class="fas fa-filter"></i>
+        </button>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search by actress, title, code, tags...">
+        </div>
+        
+        <div class="sort-container">
+            <button class="sort-btn" id="sortBtn">
+                <i class="fas fa-sort-amount-down"></i>
+            </button>
+            <div class="sort-menu" id="sortMenu">
+                <button class="sort-option" data-sort="shuffle">Shuffle (random)</button>
+                <button class="sort-option" data-sort="latest">Latest Release</button>
+                <button class="sort-option" data-sort="oldest">Oldest Release</button>
+                <button class="sort-option" data-sort="top-rated">Top Rated</button>
+                <button class="sort-option active" data-sort="most-viewed">Most Viewed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Filters Display -->
+    <div class="active-filters" id="activeFilters">
+        <!-- Filters will be added dynamically -->
+    </div>
+
+    <!-- Content Tabs -->
+    <div class="content-tabs">
+        <button class="tab active" data-tab="videos">
+            <i class="fas fa-play-circle"></i> Videos
+        </button>
+        <button class="tab" data-tab="albums">
+            <i class="fas fa-book"></i> Albums
+        </button>
+        <button class="tab" data-tab="pictures">
+            <i class="fas fa-image"></i> Pictures
+        </button>
+    </div>
+
+    <!-- Videos Content Section -->
+    <section class="content-section active" id="videosSection">
+        <div class="videos-grid" id="videosGrid">
+            <!-- Videos will be loaded dynamically -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="videosPagination">
+            <button class="page-nav-btn prev-btn" id="videosPrevBtn" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="page-number" id="videosPageNumber">1</div>
+            <button class="page-nav-btn next-btn" id="videosNextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Albums Content Section -->
+    <section class="content-section" id="albumsSection">
+        <div class="albums-grid" id="albumsGrid">
+            <!-- Albums will be loaded dynamically -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="albumsPagination">
+            <button class="page-nav-btn prev-btn" id="albumsPrevBtn" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="page-number" id="albumsPageNumber">1</div>
+            <button class="page-nav-btn next-btn" id="albumsNextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Pictures Content Section -->
+    <section class="content-section" id="picturesSection">
+        <div class="pictures-grid" id="picturesGrid">
+            <!-- Pictures will be loaded dynamically -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="picturesPagination">
+            <button class="page-nav-btn prev-btn" id="picturesPrevBtn" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="page-number" id="picturesPageNumber">1</div>
+            <button class="page-nav-btn next-btn" id="picturesNextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Video Details</h3>
+                <button class="close-modal" id="closeVideoModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content" id="mainModalContent">
+                <div class="video-thumbnail-container" id="videoThumbnailContainer">
+                    <img id="modalThumb" src="" alt="Video Thumbnail">
+                    <div class="video-player" id="videoPlayer">
+                        <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <h1 id="modalTitle">Video Title</h1>
+                
+                <div id="modalDesc" class="description">
+                    This is a sample video description. In a real implementation, this would contain details about the video content, storyline, and other relevant information. The description can be quite long, so we're implementing a "Show More/Less" toggle to manage the display.
+                </div>
+                <div id="toggleDesc" class="toggle-desc">Show More</div>
+                
+                <div id="modalTags" class="tags">
+                    <!-- Tags will be added dynamically -->
+                </div>
+                
+                <!-- SERIES -->
+                <div class="label-block">
+                    <div class="label-title">Series</div>
+                    <div id="modalSeries" class="label-value">Sample Series</div>
+                </div>
+                
+                <!-- ACTRESS -->
+                <div class="label-block">
+                    <div class="label-title">Actress</div>
+                    <div id="modalActress" class="actress-row">
+                        <!-- Actress will be added dynamically -->
+                    </div>
+                </div>
+                
+                <div class="details">
+                    <!-- LEFT -->
+                    <div class="meta">
+                        <div class="meta-row">
+                            <i class="fa-solid fa-star"></i>
+                            <strong>Rating:</strong> 
+                            <span id="modalRating">8.5</span>
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-building"></i>
+                            <strong>Studio:</strong> 
+                            <span id="modalStudio" class="label-value">Sample Studio</span>
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-tag"></i>
+                            <strong>Label:</strong> 
+                            <span id="modalLabel" class="label-value">Premium Label</span>
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-calendar"></i>
+                            <strong>Released:</strong> 
+                            <span id="modalRelease">2023-05-15</span>
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-clock"></i>
+                            <strong>Duration:</strong> 
+                            <span id="modalDuration">120</span> min
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <strong>Versions:</strong>
+                            <span id="modalVersions" class="label-value">HD, 4K</span>
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-users"></i>
+                            <strong>Group:</strong> 
+                            <span id="modalGroup" class="label-value">Duo</span>
+                        </div>
+                        <div class="meta-row">
+                            <i class="fa-solid fa-eye"></i>
+                            <strong>Views:</strong> 
+                            <span id="modalViews" class="label-value">125,000</span>
+                        </div>
+                    </div>
+                    
+                    <!-- RIGHT -->
+                    <div class="poster">
+                        <img id="modalPoster" src="" alt="Video Poster">
+                        <div id="modalCode" class="code">ABC-123</div>
+                    </div>
+                </div>
+                
+                <!-- VIDEO CONTROLS -->
+                <div class="video-controls">
+                    <button class="video-btn" id="previewBtn">
+                        <i class="fas fa-images"></i> Preview
+                    </button>
+                    <button class="video-btn" id="trailerBtn">
+                        <i class="fas fa-play-circle"></i> Trailer
+                    </button>
+                    <button class="video-btn" id="videoBtn">
+                        <i class="fas fa-film"></i> Video
+                    </button>
+                </div>
+                
+                <!-- SUGGESTION CAROUSELS -->
+                <div class="suggestions-container">
+                    <!-- Also Starred In -->
+                    <div class="suggestion-section">
+                        <h3 class="suggestion-title">Also Starred In</h3>
+                        <div class="carousel-container">
+                            <div class="carousel-nav prev" id="alsoStarredPrev">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            <div class="carousel" id="alsoStarredCarousel">
+                                <!-- Also starred videos will be loaded dynamically -->
+                            </div>
+                            <div class="carousel-nav next" id="alsoStarredNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- You May Also Like -->
+                    <div class="suggestion-section">
+                        <h3 class="suggestion-title">You May Also Like</h3>
+                        <div class="carousel-container">
+                            <div class="carousel-nav prev" id="youMayLikePrev">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            <div class="carousel" id="youMayLikeCarousel">
+                                <!-- Similar videos will be loaded dynamically -->
+                            </div>
+                            <div class="carousel-nav next" id="youMayLikeNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PREVIEW PAGE -->
+            <div class="preview-page" id="previewPage" style="display: none;">
+                <div class="preview-header">
+                    <button class="preview-back-btn" id="previewBackBtn">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <h3 class="preview-title">Preview Images</h3>
+                </div>
+                
+                <div class="preview-images-full" id="previewImagesFull">
+                    <!-- Preview images will be added dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Album Modal -->
+    <div class="modal" id="albumModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Album Details</h3>
+                <button class="close-modal" id="closeAlbumModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="album-modal-content">
+                <h1 id="albumModalTitle">Album Title</h1>
+                
+                <!-- TAGS -->
+                <div id="albumModalTags" class="tags">
+                    <!-- Tags will be added dynamically -->
+                </div>
+                
+                <!-- ACTRESS -->
+                <div class="label-block">
+                    <div class="label-title">Actress</div>
+                    <div id="albumModalActress" class="actress-row">
+                        <!-- Actress will be added dynamically -->
+                    </div>
+                </div>
+                
+                <!-- IMAGE COUNT -->
+                <div class="label-block">
+                    <div class="label-title">Image Count</div>
+                    <div id="albumModalImageCount" class="label-value">0 images</div>
+                </div>
+                
+                <!-- COVER IMAGE -->
+                <div class="label-block">
+                    <div class="label-title">Cover Image</div>
+                    <div class="album-cover-container">
+                        <img id="albumMainCover" src="" alt="Album Cover">
+                    </div>
+                </div>
+                
+                <!-- ALBUM IMAGES -->
+                <div class="label-block">
+                    <div class="label-title">Album Images</div>
+                    <div class="album-images" id="albumImages">
+                        <!-- Album images will be added dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div class="modal filter-modal" id="filterModal">
+        <div class="filter-container">
+            <div class="filter-header">
+                <h3 class="filter-title">Filters</h3>
+                <button class="close-modal" id="closeFilterModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter-tab="actress">Actress</button>
+                <button class="filter-tab" data-filter-tab="tags">Tags</button>
+                <button class="filter-tab" data-filter-tab="studios">Studios</button>
+                <button class="filter-tab" data-filter-tab="tokens">Tokens</button>
+                <button class="filter-tab" data-filter-tab="series">Series</button>
+                <button class="filter-tab" data-filter-tab="version">Version</button>
+                <button class="filter-tab" data-filter-tab="group">Group</button>
+            </div>
+            
+            <div class="filter-content">
+                <!-- Selected Filters Section -->
+                <div class="selected-filters" id="selectedFilters">
+                    <!-- Selected filters will be added dynamically -->
+                </div>
+                
+                <!-- Actress Filter -->
+                <div class="filter-section active" id="actressFilter">
+                    <div class="filter-search">
+                        <i class="fas fa-search filter-search-icon"></i>
+                        <input type="text" class="filter-search-input" data-filter-type="actress" placeholder="Search actress...">
+                    </div>
+                    <div class="actress-grid" id="actressGrid">
+                        <!-- Actress items will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Tags Filter -->
+                <div class="filter-section" id="tagsFilter">
+                    <div class="filter-search">
+                        <i class="fas fa-search filter-search-icon"></i>
+                        <input type="text" class="filter-search-input" data-filter-type="tags" placeholder="Search tags...">
+                    </div>
+                    <div class="tags-grid" id="tagsGrid">
+                        <!-- Tag items will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Studios Filter -->
+                <div class="filter-section" id="studiosFilter">
+                    <div class="filter-search">
+                        <i class="fas fa-search filter-search-icon"></i>
+                        <input type="text" class="filter-search-input" data-filter-type="studios" placeholder="Search studios...">
+                    </div>
+                    <div class="studios-grid" id="studiosGrid">
+                        <!-- Studio items will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Tokens Filter -->
+                <div class="filter-section" id="tokensFilter">
+                    <div class="filter-search">
+                        <i class="fas fa-search filter-search-icon"></i>
+                        <input type="text" class="filter-search-input" data-filter-type="tokens" placeholder="Search tokens...">
+                    </div>
+                    <div class="tokens-grid" id="tokensGrid">
+                        <!-- Token items will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Series Filter -->
+                <div class="filter-section" id="seriesFilter">
+                    <div class="filter-search">
+                        <i class="fas fa-search filter-search-icon"></i>
+                        <input type="text" class="filter-search-input" data-filter-type="series" placeholder="Search series...">
+                    </div>
+                    <div class="series-grid" id="seriesGrid">
+                        <!-- Series items will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Version Filter -->
+                <div class="filter-section" id="versionFilter">
+                    <div class="options-grid">
+                        <button class="option-item" data-filter-type="version" data-value="censored">Censored</button>
+                        <button class="option-item" data-filter-type="version" data-value="decensored">Decensored</button>
+                        <button class="option-item" data-filter-type="version" data-value="uncensored">Uncensored</button>
+                    </div>
+                </div>
+                
+                <!-- Group Filter -->
+                <div class="filter-section" id="groupFilter">
+                    <div class="options-grid">
+                        <button class="option-item" data-filter-type="group" data-value="solo">Solo</button>
+                        <button class="option-item" data-filter-type="group" data-value="duo">Duo</button>
+                        <button class="option-item" data-filter-type="group" data-value="trio">Trio</button>
+                        <button class="option-item" data-filter-type="group" data-value="multi">Multi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Viewer -->
+    <div class="modal image-modal" id="imageModal">
+        <div class="modal-container" style="background: transparent; box-shadow: none; max-width: 90vw;">
+            <div style="position: absolute; top: 1rem; right: 1rem; z-index: 1001;">
+                <button class="close-modal" id="closeImageModal" style="background-color: rgba(0,0,0,0.5); color: white;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <img src="" alt="Fullscreen" class="fullscreen-image" id="fullscreenImage">
+            </div>
+        </div>
     </div>
     
-    <!-- Modal Components -->
-    <div id="modal-container"></div>
-    
-    <!-- JavaScript Files -->
-    <script src="js/app.js"></script>
-    <script src="js/filters.js"></script>
-    <script src="js/modal.js"></script>
-    
-    <!-- Data Files -->
-    <script src="data/videodata.js"></script>
-    <script src="data/photobook.js"></script>
-    <script src="data/images.js"></script>
-    <script src="data/website.js"></script>
-    <script src="data/shorts.js"></script>
-    
-    <!-- Initialize App -->
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadComponent('components/header.html', 'header-container');
-            await loadPage('discover');
-            await loadComponent('components/video-modal.html', 'modal-container');
-            await loadComponent('components/filter-modal.html', 'modal-container');
-            await loadComponent('components/photobook-viewer.html', 'modal-container');
-            await loadComponent('components/image-viewer.html', 'modal-container');
-            
-            initializeApp();
-        });
-    </script>
+    <script src="videodata.js"></script>
+    <script src="albumdata.js"></script>
+    <script src="picturedata.js"></script>
+    <script src="filterdata.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
