@@ -1077,7 +1077,7 @@ header {
 }
 
 .filter-content {
-    padding: 1rem;
+    padding: 0.5rem;
     overflow-y: auto;
     flex: 1;
 }
