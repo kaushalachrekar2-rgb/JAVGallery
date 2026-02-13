@@ -597,99 +597,7 @@ function closePreviewPage() {
     }
 }
 
-/**
- * Extract video ID from Google Drive URL
- * @param {string} url - Google Drive URL
- * @returns {string|null} - Video ID or null if not found
- */
-function extractGoogleDriveId(url) {
-    if (!url) return null;
-    
-    // Handle different GDrive URL formats
-    const patterns = [
-        /(?:drive\.google\.com\/file\/d\/)([^\/?#]+)/,
-        /(?:drive\.google\.com\/open\?id=)([^&#]+)/,
-        /(?:drive\.google\.com\/uc\?id=)([^&#]+)/,
-        /(?:drive\.google\.com\/folderview\?id=)([^&#]+)/
-    ];
-    
-    for (const pattern of patterns) {
-        const match = url.match(pattern);
-        if (match) return match[1];
-    }
-    
-    return null;
-}
-
-/**
- * Generate embed URL for various video sources
- * @param {string} url - Original video URL
- * @param {string} type - Video type ('trailer' or 'full')
- * @returns {string} - Embed URL
- */
-function getVideoEmbedUrl(url, type) {
-    if (!url) return '';
-    
-    // If it's already an embed URL, return as is
-    if (url.includes('youtube.com/embed/') || url.includes('player.vimeo.com') || url.includes('drive.google.com/file/d/')) {
-        return url;
-    }
-    
-    // YouTube
-    if (url.includes('youtube.com/watch') || url.includes('youtu.be')) {
-        const videoId = url.includes('youtube.com/watch') 
-            ? new URL(url).searchParams.get('v')
-            : url.split('youtu.be/')[1]?.split('?')[0];
-        
-        if (videoId) {
-            return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-        }
-    }
-    
-    // Vimeo
-    if (url.includes('vimeo.com')) {
-        const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
-        if (videoId) {
-            return `https://player.vimeo.com/video/${videoId}?autoplay=1`;
-        }
-    }
-    
-    // Google Drive
-    if (url.includes('drive.google.com')) {
-        const fileId = extractGoogleDriveId(url);
-        if (fileId) {
-            // Use the direct embed URL for Google Drive
-            return `https://drive.google.com/file/d/${fileId}/preview`;
-        }
-    }
-    
-    // Dailymotion
-    if (url.includes('dailymotion.com')) {
-        const videoId = url.split('dailymotion.com/video/')[1]?.split('?')[0];
-        if (videoId) {
-            return `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1`;
-        }
-    }
-    
-    // Direct video file (mp4, webm, etc.)
-    if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv)(\?.*)?$/i)) {
-        // For direct video files, we'll use a video player approach
-        return url; // This will be handled separately in playVideo
-    }
-    
-    // If it's already an embeddable URL, return it
-    if (url.includes('embed') || url.includes('player')) {
-        return url;
-    }
-    
-    // Default: return original URL (might not work, but worth a try)
-    return url;
-}
-
-/**
- * Play video in modal
- * @param {string} type - Video type ('trailer' or 'full')
- */
+// Play video in modal - FIXED VERSION with Google Drive support
 function playVideo(type) {
     if (!videoThumbnailContainer || !currentVideoForSuggestions) return;
     
@@ -703,51 +611,53 @@ function playVideo(type) {
         videoFrame.src = '';
     }
     
-    // Get the appropriate video URL based on type
+    // Use different video sources based on type
     let videoUrl = '';
-    if (type === 'trailer' && currentVideoForSuggestions.trailer) {
-        videoUrl = currentVideoForSuggestions.trailer;
-    } else if (type === 'full' && currentVideoForSuggestions.videoUrl) {
-        videoUrl = currentVideoForSuggestions.videoUrl;
-    }
-    
-    if (!videoUrl) {
-        showNotification('Video URL not available');
-        return;
-    }
-    
-    // Get the embed URL
-    const embedUrl = getVideoEmbedUrl(videoUrl, type);
-    
-    // Check if it's a direct video file
-    if (embedUrl.match(/\.(mp4|webm|ogg|mov|avi|mkv)(\?.*)?$/i)) {
-        // For direct video files, we need a different approach
-        // We'll create a video element instead of an iframe
-        const videoElement = document.createElement('video');
-        videoElement.controls = true;
-        videoElement.autoplay = true;
-        videoElement.style.width = '100%';
-        videoElement.style.height = '100%';
-        videoElement.src = embedUrl;
-        
-        // Clear the iframe and append the video element
-        videoFrame.parentNode.replaceChild(videoElement, videoFrame);
-        
-        // Update reference
-        window.videoElement = videoElement;
-        
-        thumbnail.style.display = 'none';
-        player.style.display = 'block';
-        isVideoPlaying = true;
-        currentVideoPlayerType = type;
+    if (type === 'trailer') {
+        videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
     } else {
-        // For embedded players (YouTube, Vimeo, GDrive, etc.)
-        videoFrame.src = embedUrl;
-        thumbnail.style.display = 'none';
-        player.style.display = 'block';
-        isVideoPlaying = true;
-        currentVideoPlayerType = type;
+        // Check if we have a video URL in the current video data
+        if (currentVideoForSuggestions && currentVideoForSuggestions.videoUrl) {
+            let url = currentVideoForSuggestions.videoUrl;
+            
+            // Handle Google Drive links
+            if (url.includes('drive.google.com')) {
+                let match = url.match(/\/d\/([^\/]+)/);
+                if (match) {
+                    let fileId = match[1];
+                    url = `https://drive.google.com/file/d/${fileId}/preview`;
+                }
+            }
+            // Handle YouTube links
+            else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                if (url.includes('youtube.com/watch')) {
+                    let videoId = new URL(url).searchParams.get('v');
+                    if (videoId) {
+                        url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    }
+                } else if (url.includes('youtu.be')) {
+                    let videoId = url.split('youtu.be/')[1];
+                    if (videoId) {
+                        url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    }
+                }
+            }
+            
+            videoFrame.src = url;
+        } else {
+            // Fallback to default video
+            videoFrame.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
+        }
     }
+    
+    if (type === 'trailer') {
+        videoFrame.src = videoUrl;
+    }
+    
+    thumbnail.style.display = 'none';
+    player.style.display = 'block';
+    isVideoPlaying = true;
+    currentVideoPlayerType = type;
 }
 
 // Handle filter tab change
