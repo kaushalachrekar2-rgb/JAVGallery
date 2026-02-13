@@ -168,5 +168,34 @@ const videoData = [
             "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
             "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
         ]
-    }
+    },
+     {
+    id: 7,
+    title: "I fell in love with a high-achieving young lady who can only love a gross fat guy, and I immersed myself in the sexual development of an innocent woman in a messy room, Honjou Suzu.",
+    actress: "Honjou Suzu", // Changed from array to string
+    code: "START-464",
+    studio: "SOD Create",
+    label: "START",
+    rating: 8.62,
+    release: "2025-11-25", // Changed to YYYY-MM-DD format
+    duration: 144,
+    views: 912019,
+    group: "Solo",
+    series: "",
+    version: "Decensored",
+    token: "START",
+    trailerUrl: "https://drive.google.com/file/d/1Go9MwJ4nTS-ul2YqlSs17kO6wiAuMjrd/view",
+    videoUrl: "https://drive.google.com/file/d/12yFrDANK_rDMIbgtCxFtD8IBYv23F6I0/view",
+    description: "In this captivating drama, the elegant and highly educated Honjou Suzu stars as a refined young woman from a prestigious family who is on the verge of an arranged marriage to a suitable fiancé. One evening, during a dinner outing, she encounters trouble with a drunk individual, only to be unexpectedly rescued by Takashi, a middle-aged, unrefined, overweight man living a modest life. This chance meeting sparks an intense and inexplicable attraction in Suzu, revealing her hidden preference for men who fit this unconventional description. Drawn irresistibly to his raw authenticity, she abandons her planned future and chooses to move into his cluttered, messy apartment, embarking on a passionate cohabitation filled with intimate exploration. The story unfolds as Takashi, initially surprised by her affection, becomes deeply engrossed in awakening her sensitivities and guiding her through newfound emotional and physical discoveries in the intimate confines of his disorganized space. Honjou Suzu's performance shines with subtle vulnerability and growing confidence, creating a compelling contrast between her polished background and the gritty, authentic atmosphere of the setting. The narrative builds a tense yet tender mood, blending elements of forbidden desire, personal awakening, and dramatic transformation, all enhanced by strong chemistry and a realistic portrayal of unconventional romance that keeps viewers emotionally invested throughout.",
+    tags: ["Drama", "Ugly Bastard", "Cohabitation", "Innocence Corruption", "Creampie", "Blowjob", "Solowork"],
+    previewImages: 4,
+    thumbnail: "https://lh3.googleusercontent.com/d/1tM3nfBBL0xskAWdqhe2GfFx0TTKQHL-Z",
+    poster: "https://lh3.googleusercontent.com/d/1suzBmHzrRHd9lvlzzAyZlcQZQL7lFe8p",
+    previews: [
+      "https://lh3.googleusercontent.com/d/1YfX5M91iqQ0lprVMO5-UTsh9GvZYRSv8=s0",
+      "https://lh3.googleusercontent.com/d/1fIK0YBgegrTGGs06zQ2yH9b3orTWdnLv=s0",
+      "https://lh3.googleusercontent.com/d/1QmRexCwCsJyZStAQCI6meGz5NA7LXC-F=s0",
+      "https://lh3.googleusercontent.com/d/1Ng0VLpdIFexDX1V7-kCf7fmHg444cAT7=s0"
+    ]
+  }
 ];
