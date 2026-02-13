@@ -285,7 +285,7 @@ header {
 }
 
 .video-info {
-    padding: 0.75rem;
+    padding: 0.60rem;
 }
 
 .video-title {
@@ -305,7 +305,7 @@ header {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.2rem;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     color: var(--text-secondary);
 }
 
@@ -317,7 +317,7 @@ header {
 
 .video-meta-item i {
     color: var(--primary);
-    font-size: 0.75rem;
+    font-size: 0.65rem;
 }
 
 /* Albums Grid */
@@ -481,7 +481,7 @@ header {
 
 .modal-title {
     font-family: 'Rubik', sans-serif;
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -554,7 +554,6 @@ header {
     font-size: 14px;
     line-height: 1.55;
     color: var(--text-muted);
-    text-align: justify;
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
@@ -635,7 +634,7 @@ header {
 }
 
 .actress {
-    width: 30%;
+    width: 35%;
     text-align: center;
     cursor: pointer;
     flex-shrink: 0;
@@ -676,7 +675,7 @@ header {
     }
 }
 
-/* LEFT – 60% */
+/* LEFT – 55% */
 .meta {
     width: 100%;
     display: flex;
@@ -699,7 +698,7 @@ header {
 
 .meta-row i {
     color: var(--primary);
-    width: 14px;
+    width: 13px;
     text-align: center;
 }
 
@@ -714,7 +713,7 @@ header {
     font-weight: 500;
 }
 
-/* RIGHT – 40% */
+/* RIGHT – 45% */
 .poster {
     width: 100%;
     text-align: center;
@@ -753,7 +752,7 @@ header {
 
 .video-btn {
     flex: 1;
-    padding: 0.5rem;
+    padding: 0.6rem;
     border: none;
     border-radius: 12px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -894,7 +893,7 @@ header {
 
 /* ================= PREVIEW PAGE ================= */
 .preview-page {
-    padding: 16px 20px 20px;
+    padding: 15px 15px 15px;
     overflow-y: auto;
     flex: 1;
 }
