@@ -721,7 +721,7 @@ function playVideo(type) {
     // Get the appropriate video URL based on type
     let videoUrl = '';
     if (type === 'trailer') {
-        videoUrl = currentVideoForSuggestions.trailer;
+        videoUrl = currentVideoForSuggestions.trailerUrl; // Fixed: changed from 'trailer' to 'trailerUrl'
         console.log('Playing trailer:', videoUrl);
     } else if (type === 'full') {
         videoUrl = currentVideoForSuggestions.videoUrl;
