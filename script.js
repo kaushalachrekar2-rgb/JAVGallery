@@ -597,7 +597,114 @@ function closePreviewPage() {
     }
 }
 
-// Play video in modal - FIXED VERSION with Google Drive support
+/**
+ * Convert Google Drive URL to embed/preview URL
+ * @param {string} url - Google Drive URL
+ * @returns {string|null} - Preview URL or null if invalid
+ */
+function getGoogleDrivePreviewUrl(url) {
+    if (!url || !url.includes('drive.google.com')) return null;
+    
+    // Match file ID from various Google Drive URL formats
+    let match = url.match(/\/d\/([^\/?]+)/);
+    if (!match) {
+        // Try alternative format with id parameter
+        match = url.match(/[?&]id=([^&]+)/);
+    }
+    if (!match) {
+        // Try direct file ID format
+        match = url.match(/[a-zA-Z0-9_-]{28,}/);
+    }
+    
+    if (!match) {
+        console.warn('Invalid Google Drive link format');
+        return null;
+    }
+    
+    const fileId = match[1] || match[0];
+    return `https://drive.google.com/file/d/${fileId}/preview`;
+}
+
+/**
+ * Convert various video URLs to embed format
+ * @param {string} url - Original video URL
+ * @returns {string} - Embed URL
+ */
+function getVideoEmbedUrl(url) {
+    if (!url) return '';
+    
+    // Check if it's a Google Drive link
+    if (url.includes('drive.google.com')) {
+        const previewUrl = getGoogleDrivePreviewUrl(url);
+        if (previewUrl) return previewUrl;
+    }
+    
+    // YouTube
+    if (url.includes('youtube.com/watch') || url.includes('youtu.be')) {
+        let videoId = '';
+        if (url.includes('youtube.com/watch')) {
+            try {
+                videoId = new URL(url).searchParams.get('v');
+            } catch (e) {
+                // Fallback for malformed URLs
+                const match = url.match(/[?&]v=([^&]+)/);
+                if (match) videoId = match[1];
+            }
+        } else if (url.includes('youtu.be')) {
+            videoId = url.split('youtu.be/')[1]?.split('?')[0];
+        }
+        
+        if (videoId) {
+            return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        }
+    }
+    
+    // YouTube Shorts
+    if (url.includes('youtube.com/shorts/')) {
+        const videoId = url.split('shorts/')[1]?.split('?')[0];
+        if (videoId) {
+            return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        }
+    }
+    
+    // Vimeo
+    if (url.includes('vimeo.com')) {
+        const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
+        if (videoId) {
+            return `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+        }
+    }
+    
+    // Dailymotion
+    if (url.includes('dailymotion.com')) {
+        const videoId = url.split('dailymotion.com/video/')[1]?.split('?')[0];
+        if (videoId) {
+            return `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1`;
+        }
+    }
+    
+    // If it's already an embed URL, return as is
+    if (url.includes('embed') || url.includes('preview') || url.includes('player')) {
+        // Add autoplay parameter if not present
+        if (url.includes('?')) {
+            return url + '&autoplay=1';
+        } else {
+            return url + '?autoplay=1';
+        }
+    }
+    
+    // Default: return original URL with autoplay parameter if possible
+    if (url.includes('?')) {
+        return url + '&autoplay=1';
+    } else {
+        return url + '?autoplay=1';
+    }
+}
+
+/**
+ * Play video in modal
+ * @param {string} type - Video type ('trailer' or 'full')
+ */
 function playVideo(type) {
     if (!videoThumbnailContainer || !currentVideoForSuggestions) return;
     
@@ -611,53 +718,34 @@ function playVideo(type) {
         videoFrame.src = '';
     }
     
-    // Use different video sources based on type
+    // Get the appropriate video URL based on type
     let videoUrl = '';
     if (type === 'trailer') {
-        videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
-    } else {
-        // Check if we have a video URL in the current video data
-        if (currentVideoForSuggestions && currentVideoForSuggestions.videoUrl) {
-            let url = currentVideoForSuggestions.videoUrl;
-            
-            // Handle Google Drive links
-            if (url.includes('drive.google.com')) {
-                let match = url.match(/\/d\/([^\/]+)/);
-                if (match) {
-                    let fileId = match[1];
-                    url = `https://drive.google.com/file/d/${fileId}/preview`;
-                }
-            }
-            // Handle YouTube links
-            else if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                if (url.includes('youtube.com/watch')) {
-                    let videoId = new URL(url).searchParams.get('v');
-                    if (videoId) {
-                        url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                    }
-                } else if (url.includes('youtu.be')) {
-                    let videoId = url.split('youtu.be/')[1];
-                    if (videoId) {
-                        url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                    }
-                }
-            }
-            
-            videoFrame.src = url;
-        } else {
-            // Fallback to default video
-            videoFrame.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
-        }
+        videoUrl = currentVideoForSuggestions.trailer;
+        console.log('Playing trailer:', videoUrl);
+    } else if (type === 'full') {
+        videoUrl = currentVideoForSuggestions.videoUrl;
+        console.log('Playing full video:', videoUrl);
     }
     
-    if (type === 'trailer') {
-        videoFrame.src = videoUrl;
+    if (!videoUrl) {
+        showNotification(`${type === 'trailer' ? 'Trailer' : 'Video'} URL not available`);
+        return;
     }
     
+    // Get the embed URL
+    const embedUrl = getVideoEmbedUrl(videoUrl);
+    
+    // Set the iframe source
+    videoFrame.src = embedUrl;
+    
+    // Hide thumbnail, show player
     thumbnail.style.display = 'none';
     player.style.display = 'block';
     isVideoPlaying = true;
     currentVideoPlayerType = type;
+    
+    console.log('Playing video with embed URL:', embedUrl);
 }
 
 // Handle filter tab change
