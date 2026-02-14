@@ -2,564 +2,648 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jav Gallery - Login</title>
+    <title>CodeFlow · Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Modern Premium Variables with Light/Dark Theme */
         :root {
-            /* Light Mode Colors */
+            /* Light Mode - Purple Theme */
             --primary: #7c3aed;
             --primary-light: #8b5cf6;
             --primary-dark: #5b21b6;
-            --primary-soft: #ddd6fe;
-            --secondary: #f3f4f6;
-            --secondary-dark: #e5e7eb;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
-            --text-muted: #6b7280;
-            --background: #ffffff;
-            --card-bg: #ffffff;
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --border-color: #e5e7eb;
-            --input-bg: #f9fafb;
-            --error-bg: #fee2e2;
-            --error-text: #b91c1c;
-            --error-border: #fecaca;
-            --success-bg: #dcfce7;
-            --success-text: #166534;
-            --success-border: #bbf7d0;
+            --primary-glow: rgba(124, 58, 237, 0.15);
+            --primary-soft: #ede9fe;
+            --bg: #f8fafd;
+            --card: #ffffff;
+            --text-primary: #0b0f1c;
+            --text-secondary: #525866;
+            --text-tertiary: #8e96a3;
+            --border-subtle: #eef1f5;
+            --border-focus: #d0d9e8;
+            --danger: #f43f5e;
+            --danger-soft: #fff1f3;
+            --success: #10b981;
+            --success-soft: #e7f5e9;
+            --warning: #f59e0b;
+            --warning-soft: #fffbeb;
+            --info: #3b82f6;
+            --info-soft: #eff6ff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 12px 32px -8px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 24px 48px -16px rgba(124, 58, 237, 0.12);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            --header-bg: #ffffff;
+            --input-bg: #ffffff;
+            --gradient-start: #7c3aed;
+            --gradient-end: #8b5cf6;
         }
 
         .dark-mode {
-            /* Dark Mode Colors */
+            /* Dark Mode - Purple Theme */
             --primary: #8b5cf6;
             --primary-light: #a78bfa;
             --primary-dark: #6d28d9;
-            --primary-soft: #5b21b6;
-            --secondary: #1f2937;
-            --secondary-dark: #374151;
-            --text-primary: #f9fafb;
-            --text-secondary: #d1d5db;
-            --text-muted: #9ca3af;
-            --background: #111827;
-            --card-bg: #1f2937;
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-            --border-color: #374151;
-            --input-bg: #374151;
-            --error-bg: #451a1a;
-            --error-text: #fca5a5;
-            --error-border: #7f1d1d;
-            --success-bg: #14532d;
-            --success-text: #86efac;
-            --success-border: #166534;
+            --primary-glow: rgba(139, 92, 246, 0.25);
+            --primary-soft: #2e1b4b;
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --text-primary: #f0f0fa;
+            --text-secondary: #b0b8c5;
+            --text-tertiary: #7a7f8c;
+            --border-subtle: #2a2a3a;
+            --border-focus: #3a3a50;
+            --danger: #f87171;
+            --danger-soft: #3b1c24;
+            --success: #34d399;
+            --success-soft: #1a3a2a;
+            --warning: #fbbf24;
+            --warning-soft: #3a2e1a;
+            --info: #60a5fa;
+            --info-soft: #1a2a3a;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 24px 48px -16px rgba(139, 92, 246, 0.2);
+            --header-bg: #1a1a2e;
+            --input-bg: #2a2a3a;
+            --gradient-start: #8b5cf6;
+            --gradient-end: #a78bfa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            position: relative;
-            overflow-x: hidden;
+            margin: 0;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.2s ease;
         }
 
-        /* Animated background elements */
-        .bg-shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .shape1 {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            left: -100px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .shape2 {
-            width: 400px;
-            height: 400px;
-            bottom: -150px;
-            right: -150px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .shape3 {
-            width: 200px;
-            height: 200px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        /* Theme toggle button */
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+        /* Header with Theme Toggle */
+        .app-header {
+            position: sticky;
+            top: 0;
             z-index: 100;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        /* Login container */
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-            position: relative;
-            z-index: 10;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Logo */
-        .logo-wrapper {
-            text-align: center;
-            margin-bottom: 2rem;
+            background-color: var(--header-bg);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: background-color 0.3s ease;
         }
 
         .logo {
             font-family: 'Rubik', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            letter-spacing: 1px;
-        }
-
-        /* Login card */
-        .login-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--card-shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background-color 0.3s ease;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header h1 {
-            font-family: 'Rubik', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .login-header p {
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-soft);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 20px 16px 32px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 620;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            padding: 6px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 4px;
+            cursor: pointer;
+            border-radius: 100px;
+            font-weight: 580;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            transition: var(--transition);
+            white-space: nowrap;
+            letter-spacing: -0.01em;
         }
 
-        /* Form */
-        .form-group {
-            margin-bottom: 1.5rem;
+        .tab.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            box-shadow: var(--shadow-sm);
+            font-weight: 600;
         }
 
-        .form-label {
+        .tab.active i {
+            color: white;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            background: var(--card);
+            padding: 24px 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border-subtle);
+            backdrop-filter: blur(2px);
+        }
+
+        .section.active {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            font-size: 0.95rem;
+            animation: fadeSlide 0.25s ease;
         }
 
+        @keyframes fadeSlide {
+            0% { opacity: 0.5; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Input Field */
         .input-wrapper {
             position: relative;
-            display: flex;
-            align-items: center;
+            margin: 16px 0 20px;
         }
 
-        .input-icon {
-            position: absolute;
-            left: 1rem;
-            color: var(--text-secondary);
-            font-size: 1rem;
-            z-index: 1;
-        }
-
-        .form-input {
+        input {
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            background-color: var(--input-bg);
-            color: var(--text-primary);
-            font-family: 'DM Sans', sans-serif;
+            padding: 16px 18px;
+            border-radius: 18px;
+            border: 1.5px solid var(--border-subtle);
+            background: var(--input-bg);
             font-size: 1rem;
-            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 460;
+            color: var(--text-primary);
+            transition: var(--transition);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01);
         }
 
-        .form-input:focus {
+        input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-soft);
+            box-shadow: 0 0 0 4px var(--primary-glow), inset 0 1px 2px rgba(0,0,0,0.02);
         }
 
-        .form-input::placeholder {
-            color: var(--text-muted);
+        input::placeholder {
+            color: var(--text-tertiary);
+            font-weight: 400;
             opacity: 0.7;
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: color 0.2s ease;
+        /* Uppercase input for codes */
+        .code-input {
+            text-transform: uppercase;
+        }
+        
+        .code-input::placeholder {
+            text-transform: none;
         }
 
-        .password-toggle:hover {
-            color: var(--primary);
-        }
-
-        /* Error message */
-        .error-message {
-            background-color: var(--error-bg);
-            border: 1px solid var(--error-border);
-            color: var(--error-text);
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        .error-message i {
-            font-size: 1rem;
-        }
-
-        /* Login button */
-        .login-btn {
+        .search-box {
+            background: var(--input-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            padding: 14px 18px;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
             width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        /* Buttons */
+        button {
+            padding: 10px 16px;
+            border-radius: 40px;
             border: none;
-            border-radius: 16px;
-            color: white;
-            font-family: 'Rubik', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
             cursor: pointer;
-            display: flex;
+            font-weight: 550;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            gap: 6px;
+            letter-spacing: -0.01em;
+            background: var(--card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
         }
 
-        .login-btn:hover:not(:disabled) {
+        button:active {
+            transform: scale(0.97);
+        }
+
+        button i {
+            font-size: 0.9rem;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 18px var(--primary-glow);
+            width: 100%;
+            padding: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .primary:active {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 12px 24px var(--primary-glow);
         }
 
-        .login-btn:active:not(:disabled) {
-            transform: translateY(0);
+        .secondary {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid transparent;
+            box-shadow: none;
         }
 
-        .login-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
+        .secondary:hover {
+            background: var(--primary-light);
+            color: white;
         }
 
-        .btn-loader {
-            display: none;
+        .danger {
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: 1px solid transparent;
+            box-shadow: none;
+        }
+
+        .danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .warning {
+            background: var(--warning-soft);
+            color: var(--warning);
+            border: 1px solid transparent;
+            box-shadow: none;
+        }
+
+        .warning:hover {
+            background: var(--warning);
+            color: white;
+        }
+
+        .info {
+            background: var(--info-soft);
+            color: var(--info);
+            border: 1px solid transparent;
+            box-shadow: none;
+        }
+
+        .info:hover {
+            background: var(--info);
+            color: white;
+        }
+
+        .success {
+            background: var(--success-soft);
+            color: var(--success);
+            border: 1px solid transparent;
+            box-shadow: none;
+        }
+
+        .success:hover {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Code Card */
+        .code-card {
+            border: 1px solid var(--border-subtle);
+            border-radius: 22px;
+            padding: 20px 18px;
+            margin-bottom: 16px;
+            background: var(--card);
+            transition: var(--transition);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            position: relative;
+        }
+
+        .code-card.pinned {
+            border-left: 4px solid var(--primary);
+            background: linear-gradient(to right, var(--primary-soft) 0%, transparent 30%);
+        }
+
+        .code-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .code-title {
+            font-size: 1.2rem;
+            font-weight: 640;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            word-break: break-word;
+            text-transform: uppercase;
+        }
+
+        .pin-badge {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        /* Checklist Grid */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px 10px;
+            margin: 18px 0 8px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 470;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px 4px;
+            border-radius: 40px;
+            transition: background 0.1s ease;
+        }
+
+        label:hover {
+            background: var(--primary-soft);
+        }
+
+        input[type="checkbox"] {
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            margin: 0;
+            accent-color: var(--primary);
+            border-radius: 6px;
+            border: 1.5px solid var(--border-focus);
+            transition: var(--transition);
+            flex-shrink: 0;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Dashboard (shown after login) */
-        .dashboard {
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .welcome-message {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-        }
-
-        .welcome-message h2 {
-            font-family: 'Rubik', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .welcome-message p {
-            color: var(--text-secondary);
-        }
-
-        .dashboard-buttons {
+        /* Action buttons row */
+        .actions {
+            margin-top: 18px;
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        .dashboard-btn {
-            padding: 2rem;
-            border: none;
-            border-radius: 24px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        .action-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
             color: white;
-            font-family: 'Rubik', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .dashboard-btn i {
-            font-size: 3rem;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-        }
-
-        .dashboard-btn span {
+            padding: 14px 28px;
+            border-radius: 100px;
             font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .dashboard-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 30px rgba(124, 58, 237, 0.4);
-        }
-
-        .dashboard-btn:active {
-            transform: translateY(0);
-        }
-
-        .logout-btn {
-            margin-top: 2rem;
-            padding: 0.75rem;
-            background: none;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-secondary);
-            font-family: 'DM Sans', sans-serif;
             font-weight: 500;
-            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+            max-width: 90%;
+            text-align: center;
+            word-break: break-word;
+            white-space: normal;
+            line-height: 1.4;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Empty states */
+        .empty-message {
+            text-align: center;
+            padding: 32px 12px;
+            color: var(--text-tertiary);
+            font-size: 1rem;
+            background: var(--bg);
+            border-radius: 28px;
+            border: 1px dashed var(--border-subtle);
+        }
+
+        .badge-count {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-radius: 40px;
+            padding: 2px 10px;
+            font-size: 0.8rem;
+            font-weight: 580;
+            margin-left: 8px;
+        }
+
+        /* Edit input */
+        .edit-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 2px solid var(--primary);
+            font-size: 1rem;
+            margin: 10px 0;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            text-transform: uppercase;
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        /* Fallback copy textarea */
+        .hidden-copy-area {
+            position: fixed;
+            top: -100px;
+            left: -100px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Code format hint */
+        .code-hint {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-top: 8px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            width: 100%;
+            gap: 4px;
         }
 
-        .logout-btn:hover {
-            background-color: var(--secondary);
-            color: var(--text-primary);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .logo {
-                font-size: 2rem;
-            }
-
-            .dashboard-btn {
-                padding: 1.5rem;
-                font-size: 1.3rem;
-            }
-
-            .dashboard-btn i {
-                font-size: 2.5rem;
-            }
+        .code-hint i {
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-    <!-- Animated background shapes -->
-    <div class="bg-shape shape1"></div>
-    <div class="bg-shape shape2"></div>
-    <div class="bg-shape shape3"></div>
+    <!-- Header with Theme Toggle -->
+    <header class="app-header">
+        <div class="logo">CodeTracker</div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
 
-    <!-- Theme toggle button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <i class="fas fa-moon"></i>
-    </button>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0)"><i class="fas fa-plus-circle" style="margin-right: 4px;"></i> Add</div>
+            <div class="tab" onclick="switchTab(1)"><i class="fas fa-hourglass-half" style="margin-right: 4px;"></i> Incomplete</div>
+            <div class="tab" onclick="switchTab(2)"><i class="fas fa-check-circle" style="margin-right: 4px;"></i> Completed</div>
+        </div>
 
-    <!-- Main container -->
-    <div class="login-container">
-        <!-- Logo -->
-        <div class="logo-wrapper">
-            <div class="logo">
-                Jav Gallery
+        <!-- Add Section -->
+        <div class="section active">
+            <h2><i class="fas fa-plus-circle" style="color: var(--primary);"></i> Add new code</h2>
+            <div class="input-wrapper">
+                <input id="codeInput" class="code-input" placeholder="Enter code, e.g. ABC123" autocomplete="off" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9-]/g, '')">
+            </div>
+            <button class="primary" onclick="addCode()"><i class="fas fa-plus"></i> Add to tracker</button>
+            <div class="code-hint">
+                <i class="fas fa-info-circle"></i>
+                <span>Only capital letters, numbers, and hyphens allowed. No spaces.</span>
             </div>
         </div>
 
-        <!-- Login Form -->
-        <div class="login-card" id="loginForm">
-            <div class="login-header">
-                <h1>Welcome Back</h1>
-                <p>Please sign in to continue</p>
-            </div>
-
-            <div class="error-message" id="errorMessage">
-                <i class="fas fa-exclamation-circle"></i>
-                <span id="errorText">Invalid username or password</span>
-            </div>
-
-            <form id="login" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label class="form-label" for="username">Username</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user input-icon"></i>
-                        <input 
-                            type="text" 
-                            id="username" 
-                            class="form-input" 
-                            placeholder="Enter your username"
-                            autocomplete="off"
-                        >
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock input-icon"></i>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            class="form-input" 
-                            placeholder="Enter your password"
-                            autocomplete="off"
-                        >
-                        <i class="fas fa-eye password-toggle" id="togglePassword" onclick="togglePassword()"></i>
-                    </div>
-                </div>
-
-                <button type="submit" class="login-btn" id="loginBtn">
-                    <span>Sign In</span>
-                    <div class="btn-loader" id="btnLoader"></div>
-                </button>
-            </form>
+        <!-- Incomplete Section -->
+        <div class="section">
+            <h2><i class="fas fa-hourglass-half" style="color: var(--warning);"></i> Incomplete <span class="badge-count" id="incompleteCount">0</span></h2>
+            <input class="search-box" id="incompleteSearch" placeholder="🔍 Search by code..." oninput="searchIncomplete(this.value)">
+            <div id="incompleteList"></div>
         </div>
 
-        <!-- Dashboard (shown after login) -->
-        <div class="login-card dashboard" id="dashboard">
-            <div class="welcome-message">
-                <h2 id="welcomeUser">Welcome!</h2>
-                <p>Choose an application to launch</p>
-            </div>
-
-            <div class="dashboard-buttons">
-                <button class="dashboard-btn" onclick="openJavGallery()">
-                    <i class="fas fa-play-circle"></i>
-                    Open JavGallery
-                    <span>Browse videos, albums & pictures</span>
-                </button>
-
-                <button class="dashboard-btn" onclick="openCodeTracker()">
-                    <i class="fas fa-code"></i>
-                    Open CodeTracker
-                    <span>Track and manage your codes</span>
-                </button>
-            </div>
-
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                Sign Out
-            </button>
+        <!-- Completed Section -->
+        <div class="section">
+            <h2><i class="fas fa-check-circle" style="color: var(--success);"></i> Completed <span class="badge-count" id="completedCount">0</span></h2>
+            <input class="search-box" id="completeSearch" placeholder="🔍 Search by code..." oninput="searchCompleted(this.value)">
+            <div id="completeList"></div>
         </div>
+
+        <!-- Toast notification -->
+        <div id="toast" class="toast"></div>
+        
+        <!-- Hidden textarea for fallback copy method -->
+        <textarea id="hiddenCopyArea" class="hidden-copy-area" aria-hidden="true"></textarea>
     </div>
 
-    <script>
-        // Hardcoded credentials (only in code, not displayed)
-        const VALID_USERNAME = 'Minamo';
-        const VALID_PASSWORD = '895';
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getFirestore, collection, addDoc, onSnapshot,
+            query, orderBy, updateDoc, doc, deleteDoc, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Check if user is already logged in
-        let isLoggedIn = localStorage.getItem('javGalleryLoggedIn') === 'true';
-        let loggedInUsername = localStorage.getItem('javGalleryUsername') || '';
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDziPQuqmaYBEAklba-KtQGpQriin4qCQY",
+            authDomain: "code-tracker-8e562.firebaseapp.com",
+            projectId: "code-tracker-8e562",
+            storageBucket: "code-tracker-8e562.firebasestorage.app",
+            messagingSenderId: "972916790084",
+            appId: "1:972916790084:web:2db213302604ae9b5abd11"
+        };
 
-        // Theme management
-        let currentTheme = localStorage.getItem('theme') || 'light';
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Theme Management
+        let currentTheme = localStorage.getItem('codetracker-theme') || 'light';
         
         function applyTheme(theme) {
             if (theme === 'dark') {
@@ -573,134 +657,430 @@
 
         function toggleTheme() {
             currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-            localStorage.setItem('theme', currentTheme);
+            localStorage.setItem('codetracker-theme', currentTheme);
             applyTheme(currentTheme);
         }
 
         // Apply saved theme on load
         applyTheme(currentTheme);
 
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('togglePassword');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-
-        // Handle login
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const loginBtn = document.getElementById('loginBtn');
-            const btnLoader = document.getElementById('btnLoader');
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // Disable button and show loader
-            loginBtn.disabled = true;
-            loginBtn.querySelector('span').style.display = 'none';
-            btnLoader.style.display = 'block';
-            
-            // Hide any previous error
-            errorMessage.style.display = 'none';
-            
-            // Simulate network delay
-            setTimeout(() => {
-                // Check credentials (case-sensitive)
-                if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-                    // Successful login
-                    isLoggedIn = true;
-                    loggedInUsername = username;
-                    localStorage.setItem('javGalleryLoggedIn', 'true');
-                    localStorage.setItem('javGalleryUsername', username);
-                    
-                    // Update welcome message
-                    document.getElementById('welcomeUser').textContent = `Welcome, ${username}!`;
-                    
-                    // Hide login form, show dashboard
-                    document.getElementById('loginForm').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
-                    
-                    // Clear password field
-                    document.getElementById('password').value = '';
-                } else {
-                    // Failed login - show generic error
-                    errorMessage.style.display = 'flex';
-                    
-                    // Shake animation
-                    errorMessage.style.animation = 'none';
-                    errorMessage.offsetHeight; // Trigger reflow
-                    errorMessage.style.animation = 'shake 0.5s ease';
-                }
-                
-                // Re-enable button
-                loginBtn.disabled = false;
-                loginBtn.querySelector('span').style.display = 'inline';
-                btnLoader.style.display = 'none';
-            }, 800); // Simulate network delay
-        }
-
-        // Open JavGallery in new tab
-        function openJavGallery() {
-            window.open('javgallery.html', '_blank');
-        }
-
-        // Open CodeTracker in new tab
-        function openCodeTracker() {
-            window.open('codetracker.html', '_blank');
-        }
-
-        // Logout function
-        function logout() {
-            isLoggedIn = false;
-            loggedInUsername = '';
-            localStorage.removeItem('javGalleryLoggedIn');
-            localStorage.removeItem('javGalleryUsername');
-            
-            // Show login form, hide dashboard
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('dashboard').style.display = 'none';
-            
-            // Clear both fields
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-
-        // Check login status on page load
-        window.addEventListener('load', function() {
-            if (isLoggedIn && loggedInUsername) {
-                document.getElementById('welcomeUser').textContent = `Welcome, ${loggedInUsername}!`;
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            }
-        });
-
         // Theme toggle event listener
         document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 
-        // Handle Enter key
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !isLoggedIn) {
-                handleLogin(e);
+        // Checklist configuration
+        const checklistKeys = [
+            ["thumbnail", "Thumbnail Uploaded"],
+            ["poster", "Poster Uploaded"],
+            ["previews", "Previews Uploaded"],
+            ["viewcount", "View Count Uploaded"],
+            ["trailer", "Trailer Uploaded"],
+            ["video", "Video Uploaded"],
+            ["datasheet", "Datasheet Prepared"]
+        ];
+
+        let allCodes = [];
+        let incompleteFilter = "";
+        let completeFilter = "";
+        let editingId = null;
+        let toastTimeout = null;
+
+        // Validate code format (only uppercase letters, numbers, hyphens, no spaces)
+        function isValidCodeFormat(code) {
+            return /^[A-Z0-9-]+$/.test(code);
+        }
+
+        // Improved toast function
+        window.showToast = (message, type = 'success') => {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            
+            // Clear any existing timeout
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
             }
+            
+            // Set message
+            toast.textContent = message;
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Hide after 2 seconds
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+                toastTimeout = null;
+            }, 2000);
+        };
+
+        // Improved copy function with multiple fallback methods
+        window.copyToClipboard = async (text) => {
+            // Method 1: Modern Clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                } catch (err) {
+                    console.warn('Clipboard API failed:', err);
+                }
+            }
+            
+            // Method 2: ExecCommand fallback
+            try {
+                const textArea = document.getElementById('hiddenCopyArea');
+                if (textArea) {
+                    textArea.value = text;
+                    textArea.select();
+                    textArea.setSelectionRange(0, 99999); // For mobile
+                    const successful = document.execCommand('copy');
+                    textArea.value = ''; // Clear
+                    if (successful) {
+                        return true;
+                    }
+                }
+            } catch (err) {
+                console.warn('execCommand failed:', err);
+            }
+            
+            // Method 3: Prompt fallback
+            try {
+                prompt('📋 Copy this code manually:', text);
+                return true;
+            } catch (err) {
+                console.error('All copy methods failed:', err);
+                return false;
+            }
+        };
+
+        // Wrapper function for copying code
+        window.copyCode = async (code) => {
+            const success = await copyToClipboard(code);
+            if (success) {
+                showToast(`📋 Copied: "${code}"`);
+            } else {
+                showToast('❌ Failed to copy. Please try again.');
+            }
+        };
+
+        // Real-time listener
+        onSnapshot(query(collection(db, "codes"), orderBy("createdAt", "desc")), snap => {
+            allCodes = snap.docs.map(d => {
+                const data = d.data();
+                if (!data.checklist) {
+                    data.checklist = {
+                        thumbnail: false, poster: false, previews: false,
+                        viewcount: false, trailer: false, video: false, datasheet: false
+                    };
+                }
+                if (data.pinned === undefined) {
+                    data.pinned = false;
+                }
+                return { id: d.id, ...data };
+            });
+            render();
+        }, (error) => {
+            console.error('Firebase error:', error);
+            showToast('Connection error. Please refresh.');
         });
 
-        // Make functions available globally
-        window.togglePassword = togglePassword;
-        window.handleLogin = handleLogin;
-        window.openJavGallery = openJavGallery;
-        window.openCodeTracker = openCodeTracker;
-        window.logout = logout;
+        function render() {
+            drawIncomplete();
+            drawComplete();
+            updateCounts();
+        }
+
+        function updateCounts() {
+            const incompleteCount = allCodes.filter(c => !c.completed).length;
+            const completedCount = allCodes.filter(c => c.completed).length;
+            const incompleteEl = document.getElementById('incompleteCount');
+            const completedEl = document.getElementById('completedCount');
+            if (incompleteEl) incompleteEl.innerText = incompleteCount;
+            if (completedEl) completedEl.innerText = completedCount;
+        }
+
+        function drawIncomplete() {
+            const box = document.getElementById("incompleteList");
+            if (!box) return;
+            
+            let filtered = allCodes.filter(c => !c.completed && c.code.toLowerCase().includes(incompleteFilter));
+            
+            filtered.sort((a, b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return a.code.localeCompare(b.code);
+            });
+
+            if (!filtered.length) {
+                box.innerHTML = '<div class="empty-message"><i class="fas fa-inbox"></i> No incomplete codes match</div>';
+                return;
+            }
+
+            box.innerHTML = filtered.map(c => {
+                const isEditing = editingId === c.id;
+                
+                if (isEditing) {
+                    return `
+                        <div class="code-card ${c.pinned ? 'pinned' : ''}">
+                            <div class="code-header">
+                                <div class="code-title"><i class="fas fa-edit"></i> Editing</div>
+                            </div>
+                            <input class="edit-input" id="edit-${c.id}" value="${c.code.replace(/"/g, '&quot;')}" placeholder="Enter new code" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9-]/g, '')">
+                            <div class="edit-actions">
+                                <button class="success" onclick="saveEdit('${c.id}')"><i class="fas fa-save"></i> Save</button>
+                                <button class="secondary" onclick="cancelEdit()"><i class="fas fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const checklistHtml = checklistKeys.map(([key, label]) => `
+                    <label>
+                        <input type="checkbox" ${c.checklist[key] ? "checked" : ""}
+                            onchange="toggleChecklist('${c.id}','${key}',this)">
+                        <span>${label}</span>
+                    </label>
+                `).join('');
+
+                return `
+                    <div class="code-card ${c.pinned ? 'pinned' : ''}" data-id="${c.id}">
+                        <div class="code-header">
+                            <div class="code-title">
+                                ${c.code}
+                                ${c.pinned ? '<span class="pin-badge"><i class="fas fa-thumbtack"></i> PINNED</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="checklist">
+                            ${checklistHtml}
+                        </div>
+                        <div class="actions">
+                            <div class="action-group">
+                                <button class="secondary" onclick="editCode('${c.id}')" title="Edit code"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="info" onclick="copyCode('${c.code.replace(/'/g, "\\'")}')" title="Copy to clipboard"><i class="fas fa-copy"></i> Copy</button>
+                                ${c.pinned 
+                                    ? '<button class="warning" onclick="unpinCode(\'' + c.id + '\')" title="Unpin"><i class="fas fa-thumbtack"></i> Unpin</button>'
+                                    : '<button class="secondary" onclick="pinCode(\'' + c.id + '\')" title="Pin to top"><i class="fas fa-map-pin"></i> Pin</button>'
+                                }
+                                <button class="danger" onclick="removeCode('${c.id}')" title="Remove"><i class="fas fa-trash"></i> Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function drawComplete() {
+            const box = document.getElementById("completeList");
+            if (!box) return;
+            
+            const filtered = allCodes.filter(c => c.completed && c.code.toLowerCase().includes(completeFilter));
+            
+            if (!filtered.length) {
+                box.innerHTML = '<div class="empty-message"><i class="fas fa-check-circle"></i> No completed codes match</div>';
+                return;
+            }
+
+            box.innerHTML = filtered.map(c => `
+                <div class="code-card">
+                    <div class="code-header">
+                        <div class="code-title">
+                            ${c.code}
+                            ${c.pinned ? '<span class="pin-badge"><i class="fas fa-thumbtack"></i> PINNED</span>' : ''}
+                        </div>
+                        <button class="secondary" onclick="moveBack('${c.id}')"><i class="fas fa-undo"></i> Move back</button>
+                    </div>
+                    <div style="color: var(--success); font-size: 0.9rem; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <span><i class="fas fa-check-circle"></i> All checklist completed</span>
+                        <button class="info" onclick="copyCode('${c.code.replace(/'/g, "\\'")}')" style="padding: 6px 12px;"><i class="fas fa-copy"></i> Copy Code</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.searchIncomplete = (v) => {
+            incompleteFilter = v.toLowerCase();
+            drawIncomplete();
+        };
+
+        window.searchCompleted = (v) => {
+            completeFilter = v.toLowerCase();
+            drawComplete();
+        };
+
+        window.addCode = async () => {
+            const inputEl = document.getElementById("codeInput");
+            let v = inputEl.value.trim().toUpperCase();
+            
+            // Remove any invalid characters
+            v = v.replace(/[^A-Z0-9-]/g, '');
+            
+            if (!v) { 
+                showToast("Please enter a code"); 
+                return; 
+            }
+            
+            // Validate format
+            if (!isValidCodeFormat(v)) {
+                showToast("Code must contain only capital letters, numbers, and hyphens");
+                return;
+            }
+            
+            if (allCodes.some(c => c.code.toUpperCase() === v)) {
+                showToast("Code already exists"); 
+                return;
+            }
+
+            const checklist = {};
+            checklistKeys.forEach(([k]) => checklist[k] = false);
+
+            try {
+                await addDoc(collection(db, "codes"), {
+                    code: v,
+                    completed: false,
+                    pinned: false,
+                    checklist,
+                    createdAt: serverTimestamp()
+                });
+                inputEl.value = "";
+                showToast("✅ Code added successfully");
+            } catch (error) {
+                console.error('Add error:', error);
+                showToast("Failed to add code");
+            }
+        };
+
+        window.toggleChecklist = async (id, key, el) => {
+            if (!confirm(`Mark "${checklistKeys.find(([k]) => k === key)?.[1]}" as completed?`)) {
+                el.checked = !el.checked;
+                return;
+            }
+
+            const code = allCodes.find(c => c.id === id);
+            if (!code) return;
+            
+            code.checklist[key] = el.checked;
+            const allDone = Object.values(code.checklist).every(v => v);
+
+            try {
+                await updateDoc(doc(db, "codes", id), {
+                    checklist: code.checklist,
+                    completed: allDone
+                });
+                
+                if (allDone) {
+                    showToast("✨ All items completed! Code moved to completed.");
+                }
+            } catch (error) {
+                console.error('Update error:', error);
+                showToast("Failed to update");
+                el.checked = !el.checked;
+            }
+        };
+
+        window.removeCode = async (id) => {
+            if (!confirm("Permanently remove this code?")) return;
+            try {
+                await deleteDoc(doc(db, "codes", id));
+                showToast("🗑️ Code removed");
+            } catch (error) {
+                console.error('Delete error:', error);
+                showToast("Failed to remove code");
+            }
+        };
+
+        window.moveBack = async (id) => {
+            if (!confirm("Move back to incomplete? All checklist items will reset.")) return;
+
+            const checklist = {};
+            checklistKeys.forEach(([k]) => checklist[k] = false);
+
+            try {
+                await updateDoc(doc(db, "codes", id), {
+                    completed: false,
+                    checklist
+                });
+                showToast("↩️ Code moved back to incomplete");
+            } catch (error) {
+                console.error('Move back error:', error);
+                showToast("Failed to move code");
+            }
+        };
+
+        window.editCode = (id) => {
+            if (!confirm("Edit this code?")) return;
+            editingId = id;
+            drawIncomplete();
+        };
+
+        window.saveEdit = async (id) => {
+            const newCode = document.getElementById(`edit-${id}`).value.trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+            
+            if (!newCode) {
+                showToast("Code cannot be empty");
+                return;
+            }
+            
+            // Validate format
+            if (!isValidCodeFormat(newCode)) {
+                showToast("Code must contain only capital letters, numbers, and hyphens");
+                return;
+            }
+            
+            if (allCodes.some(c => c.id !== id && c.code.toUpperCase() === newCode)) {
+                showToast("Code already exists");
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, "codes", id), {
+                    code: newCode
+                });
+                editingId = null;
+                showToast("✅ Code updated successfully");
+            } catch (error) {
+                console.error('Edit error:', error);
+                showToast("Failed to update code");
+            }
+        };
+
+        window.cancelEdit = () => {
+            editingId = null;
+            drawIncomplete();
+        };
+
+        window.pinCode = async (id) => {
+            try {
+                await updateDoc(doc(db, "codes", id), {
+                    pinned: true
+                });
+                showToast("📌 Code pinned to top");
+            } catch (error) {
+                console.error('Pin error:', error);
+                showToast("Failed to pin code");
+            }
+        };
+
+        window.unpinCode = async (id) => {
+            try {
+                await updateDoc(doc(db, "codes", id), {
+                    pinned: false
+                });
+                showToast("📍 Code unpinned");
+            } catch (error) {
+                console.error('Unpin error:', error);
+                showToast("Failed to unpin code");
+            }
+        };
+
+        window.switchTab = (i) => {
+            document.querySelectorAll(".tab").forEach((t, x) => t.classList.toggle("active", x === i));
+            document.querySelectorAll(".section").forEach((s, x) => s.classList.toggle("active", x === i));
+            if (i !== 1) editingId = null;
+        };
+
+        // Initialize
+        window.onerror = function(msg, url, line) {
+            console.error('Global error:', msg, url, line);
+            return false;
+        };
     </script>
 </body>
 </html>
