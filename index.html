@@ -2,46 +2,705 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
-
-    <!-- Mobile viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jav Gallery - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        :root {
+            /* Light Mode Colors */
+            --primary: #7c3aed;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5b21b6;
+            --primary-soft: #ddd6fe;
+            --secondary: #f3f4f6;
+            --secondary-dark: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --text-muted: #6b7280;
+            --background: #ffffff;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --border-color: #e5e7eb;
+            --input-bg: #f9fafb;
+            --error-bg: #fee2e2;
+            --error-text: #b91c1c;
+            --error-border: #fecaca;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --success-border: #bbf7d0;
         }
 
-        /* Container to ensure full height on mobile */
-        .app {
-            height: 100vh;
-            width: 100vw;
+        .dark-mode {
+            /* Dark Mode Colors */
+            --primary: #8b5cf6;
+            --primary-light: #a78bfa;
+            --primary-dark: #6d28d9;
+            --primary-soft: #5b21b6;
+            --secondary: #1f2937;
+            --secondary-dark: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --background: #111827;
+            --card-bg: #1f2937;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --border-color: #374151;
+            --input-bg: #374151;
+            --error-bg: #451a1a;
+            --error-text: #fca5a5;
+            --error-border: #7f1d1d;
+            --success-bg: #14532d;
+            --success-text: #86efac;
+            --success-border: #166534;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .shape2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .shape3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Login container */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 10;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo */
+        .logo-wrapper {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-family: 'Rubik', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        /* Login card */
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            z-index: 1;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* Error message */
+        .error-message {
+            background-color: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: var(--error-text);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .error-message i {
+            font-size: 1rem;
+        }
+
+        /* Login button */
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .login-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Dashboard (shown after login) */
+        .dashboard {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .welcome-message h2 {
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-message p {
+            color: var(--text-secondary);
+        }
+
+        .dashboard-buttons {
             display: flex;
             flex-direction: column;
-
-            /* Safe area support (iOS notch) */
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+            gap: 1.5rem;
         }
 
-        iframe {
+        .dashboard-btn {
+            padding: 2rem;
             border: none;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-btn i {
+            font-size: 3rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .dashboard-btn span {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .dashboard-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .dashboard-btn:active {
+            transform: translateY(0);
+        }
+
+        .logout-btn {
+            margin-top: 2rem;
+            padding: 0.75rem;
+            background: none;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
             width: 100%;
-            height: 100%;
-            flex: 1;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--secondary);
+            color: var(--text-primary);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .dashboard-btn {
+                padding: 1.5rem;
+                font-size: 1.3rem;
+            }
+
+            .dashboard-btn i {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Animated background shapes -->
+    <div class="bg-shape shape1"></div>
+    <div class="bg-shape shape2"></div>
+    <div class="bg-shape shape3"></div>
 
-    <div class="app">
-        <iframe src="main.html" title="Top Bar"></
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Main container -->
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="logo-wrapper">
+            <div class="logo">
+                Jav Gallery
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-card" id="loginForm">
+            <div class="login-header">
+                <h1>Welcome Back</h1>
+                <p>Please sign in to continue</p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText">Invalid username or password</span>
+            </div>
+
+            <form id="login" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            class="form-input" 
+                            placeholder="Enter your username"
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            autocomplete="off"
+                        >
+                        <i class="fas fa-eye password-toggle" id="togglePassword" onclick="togglePassword()"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span>Sign In</span>
+                    <div class="btn-loader" id="btnLoader"></div>
+                </button>
+            </form>
+        </div>
+
+        <!-- Dashboard (shown after login) -->
+        <div class="login-card dashboard" id="dashboard">
+            <div class="welcome-message">
+                <h2 id="welcomeUser">Welcome!</h2>
+                <p>Choose an application to launch</p>
+            </div>
+
+            <div class="dashboard-buttons">
+                <button class="dashboard-btn" onclick="openJavGallery()">
+                    <i class="fas fa-play-circle"></i>
+                    Open JavGallery
+                    <span>Browse videos, albums & pictures</span>
+                </button>
+
+                <button class="dashboard-btn" onclick="openCodeTracker()">
+                    <i class="fas fa-code"></i>
+                    Open CodeTracker
+                    <span>Track and manage your codes</span>
+                </button>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded credentials (only in code, not displayed)
+        const VALID_USERNAME = 'Minamo';
+        const VALID_PASSWORD = '895';
+
+        // Check if user is already logged in
+        let isLoggedIn = localStorage.getItem('javGalleryLoggedIn') === 'true';
+        let loggedInUsername = localStorage.getItem('javGalleryUsername') || '';
+
+        // Theme management
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', currentTheme);
+            applyTheme(currentTheme);
+        }
+
+        // Apply saved theme on load
+        applyTheme(currentTheme);
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePassword');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+            const btnLoader = document.getElementById('btnLoader');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Disable button and show loader
+            loginBtn.disabled = true;
+            loginBtn.querySelector('span').style.display = 'none';
+            btnLoader.style.display = 'block';
+            
+            // Hide any previous error
+            errorMessage.style.display = 'none';
+            
+            // Simulate network delay
+            setTimeout(() => {
+                // Check credentials (case-sensitive)
+                if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                    // Successful login
+                    isLoggedIn = true;
+                    loggedInUsername = username;
+                    localStorage.setItem('javGalleryLoggedIn', 'true');
+                    localStorage.setItem('javGalleryUsername', username);
+                    
+                    // Update welcome message
+                    document.getElementById('welcomeUser').textContent = `Welcome, ${username}!`;
+                    
+                    // Hide login form, show dashboard
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                } else {
+                    // Failed login - show generic error
+                    errorMessage.style.display = 'flex';
+                    
+                    // Shake animation
+                    errorMessage.style.animation = 'none';
+                    errorMessage.offsetHeight; // Trigger reflow
+                    errorMessage.style.animation = 'shake 0.5s ease';
+                }
+                
+                // Re-enable button
+                loginBtn.disabled = false;
+                loginBtn.querySelector('span').style.display = 'inline';
+                btnLoader.style.display = 'none';
+            }, 800); // Simulate network delay
+        }
+
+        // Open JavGallery in new tab
+        function openJavGallery() {
+            window.open('javgallery.html', '_blank');
+        }
+
+        // Open CodeTracker in new tab
+        function openCodeTracker() {
+            window.open('codetracker.html', '_blank');
+        }
+
+        // Logout function
+        function logout() {
+            isLoggedIn = false;
+            loggedInUsername = '';
+            localStorage.removeItem('javGalleryLoggedIn');
+            localStorage.removeItem('javGalleryUsername');
+            
+            // Show login form, hide dashboard
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            
+            // Clear both fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Check login status on page load
+        window.addEventListener('load', function() {
+            if (isLoggedIn && loggedInUsername) {
+                document.getElementById('welcomeUser').textContent = `Welcome, ${loggedInUsername}!`;
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            }
+        });
+
+        // Theme toggle event listener
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        // Handle Enter key
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !isLoggedIn) {
+                handleLogin(e);
+            }
+        });
+
+        // Make functions available globally
+        window.togglePassword = togglePassword;
+        window.handleLogin = handleLogin;
+        window.openJavGallery = openJavGallery;
+        window.openCodeTracker = openCodeTracker;
+        window.logout = logout;
+    </script>
+</body>
+</html>
